@@ -51,9 +51,32 @@ class Database {
       autoSyncIntervalSec: 30
     });
 
-    this.ledgers = readJson(FILES.ledgers, {});
-    this.stockItems = readJson(FILES.stockItems, {});
-    this.vouchers = readJson(FILES.vouchers, {});
+    const rawLedgers = readJson(FILES.ledgers, {});
+    if (Array.isArray(rawLedgers)) {
+      this.ledgers = {};
+      rawLedgers.forEach(l => { if (l && l.name) this.ledgers[l.name] = l; });
+    } else {
+      this.ledgers = rawLedgers || {};
+    }
+
+    const rawStock = readJson(FILES.stockItems, {});
+    if (Array.isArray(rawStock)) {
+      this.stockItems = {};
+      rawStock.forEach(s => { if (s && s.name) this.stockItems[s.name] = s; });
+    } else {
+      this.stockItems = rawStock || {};
+    }
+
+    const rawVouchers = readJson(FILES.vouchers, {});
+    if (rawVouchers && Array.isArray(rawVouchers.items)) {
+      this.vouchers = {};
+      rawVouchers.items.forEach(v => { if (v && v.id) this.vouchers[v.id] = v; });
+    } else if (Array.isArray(rawVouchers)) {
+      this.vouchers = {};
+      rawVouchers.forEach(v => { if (v && v.id) this.vouchers[v.id] = v; });
+    } else {
+      this.vouchers = rawVouchers || {};
+    }
     this.units = readJson(FILES.units, []);
     this.groups = readJson(FILES.groups, []);
     this.logs = readJson(FILES.logs, []);
@@ -78,7 +101,12 @@ class Database {
       this.vouchers = {};
       this.ledgers = {};
       this.stockItems = {};
-      writeJson(FILES.vouchers, this.vouchers);
+      const vList = Object.values(this.vouchers);
+    writeJson(FILES.vouchers, {
+      total: vList.length,
+      lastUpdated: new Date().toISOString(),
+      items: vList
+    });
       writeJson(FILES.ledgers, this.ledgers);
       writeJson(FILES.stockItems, this.stockItems);
     }
@@ -136,7 +164,12 @@ class Database {
       }
     });
 
-    writeJson(FILES.vouchers, this.vouchers);
+    const vList = Object.values(this.vouchers);
+    writeJson(FILES.vouchers, {
+      total: vList.length,
+      lastUpdated: new Date().toISOString(),
+      items: vList
+    });
     this.saveState({ lastVoucherAlterId: maxAlterId });
     return { count: updatedCount, maxAlterId };
   }

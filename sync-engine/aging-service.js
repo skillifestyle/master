@@ -402,6 +402,7 @@ class AgingService {
       path.join(__dirname, 'data', 'aging.json'),
       path.join(__dirname, 'public', 'data', 'aging.json'),
       path.join(__dirname, '..', 'android-app', 'www', 'data', 'aging.json'),
+      path.join(__dirname, '..', 'web', 'data', 'aging.json'),
       path.join(__dirname, '..', 'data', 'aging.json')
     ];
     paths.forEach(p => {

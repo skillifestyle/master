@@ -92,7 +92,13 @@ async function createPartyStatementPdf(partyName, options = {}) {
 async function generateAllOpenDebtorPdfs(options = {}) {
   const agingPath = path.join(__dirname, 'data', 'aging.json');
   const aging = JSON.parse(fs.readFileSync(agingPath, 'utf8'));
-  const debtors = aging.debtors.parties.filter(p => p.netDue > 0);
+  const seen = new Set();
+  const debtors = aging.debtors.parties.filter(p => {
+    if (p.netDue <= 0) return false;
+    if (seen.has(p.partyName.toLowerCase())) return false;
+    seen.add(p.partyName.toLowerCase());
+    return true;
+  });
 
   console.log(`Generating statement PDFs for ${debtors.length} open debtors...`);
   const generated = [];
