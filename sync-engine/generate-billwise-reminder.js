@@ -52,21 +52,44 @@ function generateReminder(partyName, options = {}) {
     };
   });
 
+  // Calculate Overdue (> 45 Days) vs Current (<= 45 Days)
+  const overdueAbove45Bills = tableRows.filter(r => r.overdueDays > 45);
+  const overdueAbove45Amt = overdueAbove45Bills.reduce((s, r) => s + r.pendingAmount, 0);
+  const currentUnder45Bills = tableRows.filter(r => r.overdueDays <= 45);
+  const currentUnder45Amt = currentUnder45Bills.reduce((s, r) => s + r.pendingAmount, 0);
+
+  // Overdue amount shown on top: strictly bills above 45 days
+  const topOverdueAmt = overdueAbove45Amt > 0 ? overdueAbove45Amt : 0;
+
   // Calculate 5% CD on Taxable Value
   const totalTaxable = tableRows.reduce((s, r) => s + r.taxableAmount, 0);
   const cdAmount = Math.round(totalTaxable * 0.05 * 100) / 100;
   const netAfterCd = Math.round((totalPending - cdAmount) * 100) / 100;
 
   // 1. Generate Biz Analyst Style WhatsApp Text
-  let waText = `Hello! This is a reminder from *SKIL LIFESTYLE LLP* that your account balance of *₹${Number(totalPending).toLocaleString('en-IN')}* is overdue as of ${asOfDateStr}.\n\n`;
+  let waText = '';
+  if (topOverdueAmt > 0) {
+    waText = `Hello! This is a reminder from *SKIL LIFESTYLE LLP* that your account balance of *₹${Number(topOverdueAmt).toLocaleString('en-IN')}* was overdue (>45 days) as of ${asOfDateStr}. Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.\n\n`;
+    if (currentUnder45Amt > 0) {
+      waText += `*(Total Account Balance: ₹${Number(totalPending).toLocaleString('en-IN')}, including ₹${Number(currentUnder45Amt).toLocaleString('en-IN')} within 45-day credit period)*\n\n`;
+    }
+  } else {
+    waText = `Hello! This is a statement of account from *SKIL LIFESTYLE LLP* as of ${asOfDateStr}. Your current account balance is *₹${Number(totalPending).toLocaleString('en-IN')}* (all bills within normal 45-day terms). Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.\n\n`;
+  }
+
   waText += `📋 *Outstanding Bill-Wise Details (as of ${asOfDateStr}):*\n\n`;
 
   tableRows.forEach(r => {
-    waText += `• *${r.date}* | *#${r.refNo}*: *₹${Number(r.pendingAmount).toLocaleString('en-IN')}* (Due: ${r.dueOn} • ${r.overdueDays}d overdue)\n`;
+    const statusTag = r.overdueDays > 45 ? `🔴 ${r.overdueDays}d overdue` : `🟢 ${r.overdueDays}d (current)`;
+    waText += `• *${r.date}* | *#${r.refNo}*: *₹${Number(r.pendingAmount).toLocaleString('en-IN')}* (${statusTag})\n`;
   });
 
   waText += `────────────────────────\n`;
   waText += `*Total Outstanding (${tableRows.length} Bills): ₹${Number(totalPending).toLocaleString('en-IN')}*\n`;
+  if (topOverdueAmt > 0 && currentUnder45Amt > 0) {
+    waText += `• *Overdue (>45 Days): ₹${Number(topOverdueAmt).toLocaleString('en-IN')}*\n`;
+    waText += `• *Current (≤45 Days): ₹${Number(currentUnder45Amt).toLocaleString('en-IN')}*\n`;
+  }
   
   if (partyType === 'debtor' && options.includeCd !== false) {
     waText += `*Less: 5% Cash Discount on Taxable (₹${Number(totalTaxable).toLocaleString('en-IN')}): -₹${Number(cdAmount).toLocaleString('en-IN')}*\n`;
@@ -219,7 +242,10 @@ function generateReminder(partyName, options = {}) {
 <body>
   <div class="card">
     <div class="greeting">
-      Hello! This is a reminder that your account balance of <b>₹${Number(totalPending).toLocaleString('en-IN')}</b> was overdue as of <b>${asOfDateStr}</b>. Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.
+      ${topOverdueAmt > 0
+        ? `Hello! This is a reminder that your account balance of <b>₹${Number(topOverdueAmt).toLocaleString('en-IN')}</b> was overdue (&gt;45 days) as of <b>${asOfDateStr}</b>. (Total pending balance: <b>₹${Number(totalPending).toLocaleString('en-IN')}</b>). Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.`
+        : `Hello! This is a statement of account as of <b>${asOfDateStr}</b>. Your current account balance is <b>₹${Number(totalPending).toLocaleString('en-IN')}</b> (all bills within normal 45-day credit period). Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.`
+      }
     </div>
 
     <div class="company-title">SKIL LIFESTYLE LLP</div>
@@ -262,6 +288,12 @@ function generateReminder(partyName, options = {}) {
       <div class="total-box">
         Total Pending: ₹${Number(totalPending).toLocaleString('en-IN')}
       </div>
+      ${topOverdueAmt > 0 && currentUnder45Amt > 0 ? `
+        <div style="font-size: 12.5px; margin-top: 8px; color: #475569;">
+          🔴 Overdue (&gt;45 Days): <b style="color: #DC2626;">₹${Number(topOverdueAmt).toLocaleString('en-IN')}</b> &bull; 
+          🟢 Current (&le;45 Days): <b style="color: #16A34A;">₹${Number(currentUnder45Amt).toLocaleString('en-IN')}</b>
+        </div>
+      ` : ''}
     </div>
 
     ${partyType === 'debtor' ? `

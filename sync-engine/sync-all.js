@@ -16,6 +16,24 @@ const TARGET_DATA_DIRS = [
   path.join(ROOT, 'web', 'data')
 ];
 
+function safeWriteFile(filePath, content) {
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      const dir = path.dirname(filePath);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(filePath, content, 'utf8');
+      return;
+    } catch (err) {
+      if (attempt === 4) {
+        console.warn(`⚠️ Warning writing ${path.basename(filePath)}:`, err.message);
+        return;
+      }
+      const start = Date.now();
+      while (Date.now() - start < 150) {}
+    }
+  }
+}
+
 async function syncAll(options = {}) {
   const startTime = Date.now();
   console.log('====================================================');
@@ -86,11 +104,10 @@ async function syncAll(options = {}) {
   // 7. Write to all target data directories (Sync Engine, Android App, Web/GitHub Pages)
   console.log('6️⃣ Distributing payloads across system directories...');
   TARGET_DATA_DIRS.forEach(dir => {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'vouchers.json'), JSON.stringify(vouchersPayload));
-    fs.writeFileSync(path.join(dir, 'ledgers.json'), JSON.stringify(ledgers, null, 2));
-    fs.writeFileSync(path.join(dir, 'status.json'), JSON.stringify(statusPayload, null, 2));
-    fs.writeFileSync(path.join(dir, 'aging.json'), JSON.stringify(agingData, null, 2));
+    safeWriteFile(path.join(dir, 'vouchers.json'), JSON.stringify(vouchersPayload));
+    safeWriteFile(path.join(dir, 'ledgers.json'), JSON.stringify(ledgers, null, 2));
+    safeWriteFile(path.join(dir, 'status.json'), JSON.stringify(statusPayload, null, 2));
+    safeWriteFile(path.join(dir, 'aging.json'), JSON.stringify(agingData, null, 2));
     console.log(`   ✓ Updated: ${path.relative(ROOT, dir)}`);
   });
   console.log('');

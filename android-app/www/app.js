@@ -2983,9 +2983,15 @@ window.openCustomerSettlementModal = function(partyName) {
   // Map bills with full official invoice amount and settled amounts
   const mappedBills = billsToTrack.map((b, i) => {
     const isSepBill = isKgn ? (b.voucherNumber === 'SKIL-027' || b.voucherNumber === 'SKIL-028' || b.voucherNumber === 'SKIL-029') : true;
+    let daysElapsed = b.daysElapsed;
+    if (daysElapsed === undefined && b.date) {
+      const bDate = b.date.length === 8 ? new Date(parseInt(b.date.slice(0,4)), parseInt(b.date.slice(4,6))-1, parseInt(b.date.slice(6,8))) : new Date(b.date);
+      daysElapsed = Math.max(0, Math.floor((new Date() - bDate) / 86400000));
+    }
     return {
       ...b,
       checked: isSepBill,
+      daysElapsed: daysElapsed || 0,
       gross: b.amount, // Full official invoice amount
       settledAmount: b.settledAmount || 0,
       unpaidAmount: b.unpaidAmount !== undefined ? b.unpaidAmount : b.amount,
@@ -3036,6 +3042,14 @@ window.openCustomerSettlementModal = function(partyName) {
     bills: mappedBills
   };
 
+  state.statementStyle = 'biz';
+  const btnBiz = document.getElementById('btnStmtStyleBiz');
+  const btnCan = document.getElementById('btnStmtStyleCanonical');
+  if (btnBiz && btnCan) {
+    btnBiz.classList.add('active');
+    btnCan.classList.remove('active');
+  }
+
   renderSettlementChecklist();
   recalculateSettlement();
 
@@ -3060,6 +3074,14 @@ window.selectSettlementSession = function(sessNum) {
     const credits = targetSess ? (targetSess.creditsApplied || 0) : 0;
     if (txtPartPayment) txtPartPayment.value = credits > 0 ? credits : '';
   }
+  state.statementStyle = 'biz';
+  const btnBiz = document.getElementById('btnStmtStyleBiz');
+  const btnCan = document.getElementById('btnStmtStyleCanonical');
+  if (btnBiz && btnCan) {
+    btnBiz.classList.add('active');
+    btnCan.classList.remove('active');
+  }
+
   renderSettlementChecklist();
   recalculateSettlement();
 };
@@ -3075,26 +3097,28 @@ function renderSettlementChecklist() {
   }
 
   container.innerHTML = bills.map((b, idx) => {
+    const isOver45 = (b.daysElapsed || 0) > 45;
     return `
-      <div class="settle-bill-row ${b.checked ? 'checked' : ''}" onclick="toggleSettleBill(${idx})" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 8px; margin-bottom: 4px; cursor: pointer; border: 1px solid ${b.checked ? '#86EFAC' : '#E2E8F0'}; background: ${b.checked ? '#F0FDF4' : '#FFFFFF'};">
+      <div class="settle-bill-row ${b.checked ? 'checked' : ''}" onclick="toggleSettleBill(${idx})" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 8px; margin-bottom: 4px; cursor: pointer; border: 1px solid ${b.checked ? (isOver45 ? '#FCA5A5' : '#86EFAC') : '#E2E8F0'}; background: ${b.checked ? (isOver45 ? '#FEF2F2' : '#F0FDF4') : '#FFFFFF'};">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <input type="checkbox" ${b.checked ? 'checked' : ''} style="accent-color: #16A34A; pointer-events: none;">
+          <input type="checkbox" ${b.checked ? 'checked' : ''} style="accent-color: ${isOver45 ? '#DC2626' : '#16A34A'}; pointer-events: none;">
           <div>
             <div style="font-weight: 800; font-size: 13px; color: #0F172A;">
               #${b.voucherNumber} <span style="font-size: 11px; color: #64748B; font-weight: 600;">(${b.cartons} CTN)</span>
+              ${isOver45 ? `<span class="badge-pill badge-danger" style="font-size: 9px; padding: 1px 5px; margin-left: 6px;">Overdue &gt;45d</span>` : `<span class="badge-pill badge-success" style="font-size: 9px; padding: 1px 5px; margin-left: 6px;">Current &le;45d</span>`}
             </div>
             <div style="font-size: 11px; color: #64748B;">
-              📅 ${b.formattedDate || b.date} &bull; Taxable: ₹${Number(b.taxable).toLocaleString('en-IN')}
+              📅 ${b.formattedDate || b.date} &bull; ${b.daysElapsed || 0}d &bull; Taxable: ₹${Number(b.taxable).toLocaleString('en-IN')}
             </div>
           </div>
         </div>
         <div style="text-align: right;">
-          <div style="font-weight: 800; font-size: 13.5px; color: #0F172A;">₹${Number(b.gross).toLocaleString('en-IN')}</div>
+          <div style="font-weight: 800; font-size: 13.5px; color: ${isOver45 ? '#DC2626' : '#0F172A'};">₹${Number(b.unpaidAmount !== undefined ? b.unpaidAmount : b.gross).toLocaleString('en-IN')}</div>
           ${b.settledAmount > 0 ? `
             <div style="font-size: 10px; color: #16A34A; font-weight: 700;">Paid: ₹${Number(b.settledAmount).toLocaleString('en-IN')} &bull; Due: ₹${Number(b.unpaidAmount).toLocaleString('en-IN')}</div>
           ` : `
-            <span class="badge-pill badge-success" style="font-size: 9.5px; padding: 1px 5px;">
-              5% CD Applicable
+            <span class="badge-pill badge-neutral" style="font-size: 9px; padding: 1px 5px;">
+              Gross: ₹${Number(b.gross).toLocaleString('en-IN')}
             </span>
           `}
         </div>
@@ -3106,6 +3130,58 @@ function renderSettlementChecklist() {
 window.toggleSettleBill = function(idx) {
   if (!window.currentSettlement?.bills[idx]) return;
   window.currentSettlement.bills[idx].checked = !window.currentSettlement.bills[idx].checked;
+  state.statementStyle = 'biz';
+  const btnBiz = document.getElementById('btnStmtStyleBiz');
+  const btnCan = document.getElementById('btnStmtStyleCanonical');
+  if (btnBiz && btnCan) {
+    btnBiz.classList.add('active');
+    btnCan.classList.remove('active');
+  }
+
+  renderSettlementChecklist();
+  recalculateSettlement();
+};
+
+window.setStatementStyle = function(style) {
+  state.statementStyle = style;
+  const btnBiz = document.getElementById('btnStmtStyleBiz');
+  const btnCan = document.getElementById('btnStmtStyleCanonical');
+  if (btnBiz && btnCan) {
+    if (style === 'biz') {
+      btnBiz.classList.add('active');
+      btnCan.classList.remove('active');
+    } else {
+      btnCan.classList.add('active');
+      btnBiz.classList.remove('active');
+    }
+  }
+  recalculateSettlement();
+};
+
+window.toggleOverdueOnlyBills = function() {
+  if (!window.currentSettlement?.bills) return;
+  const btn = document.getElementById('btnFilterOverdueOnly');
+  const isOverdueFiltered = btn?.classList.contains('active');
+  
+  if (isOverdueFiltered) {
+    btn.classList.remove('active');
+    btn.innerText = '🔴 Filter: Overdue (>45 Days) Only';
+    window.currentSettlement.bills.forEach(b => b.checked = true);
+  } else {
+    btn.classList.add('active');
+    btn.innerText = '📋 Show All Invoices';
+    window.currentSettlement.bills.forEach(b => {
+      b.checked = (b.daysElapsed || 0) > 45;
+    });
+  }
+  state.statementStyle = 'biz';
+  const btnBiz = document.getElementById('btnStmtStyleBiz');
+  const btnCan = document.getElementById('btnStmtStyleCanonical');
+  if (btnBiz && btnCan) {
+    btnBiz.classList.add('active');
+    btnCan.classList.remove('active');
+  }
+
   renderSettlementChecklist();
   recalculateSettlement();
 };
@@ -3138,6 +3214,20 @@ function recalculateSettlement() {
       latestBillDateStr = b.formattedDate || b.date;
     }
   });
+
+  // Calculate Overdue (> 45 Days) vs Current (<= 45 Days)
+  const overdueBillsAbove45 = selectedBills.filter(b => (b.daysElapsed || 0) > 45);
+  const overdueAmountAbove45 = overdueBillsAbove45.reduce((sum, b) => sum + (b.unpaidAmount !== undefined ? b.unpaidAmount : b.gross), 0);
+  const currentBillsUnder45 = selectedBills.filter(b => (b.daysElapsed || 0) <= 45);
+  const currentAmountUnder45 = currentBillsUnder45.reduce((sum, b) => sum + (b.unpaidAmount !== undefined ? b.unpaidAmount : b.gross), 0);
+
+  // Update Top Overdue Banner Elements
+  const elBannerOverdue = document.getElementById('bannerOverdueAbove45Amt');
+  if (elBannerOverdue) elBannerOverdue.innerText = formatINR(overdueAmountAbove45);
+  const elBannerCurrent = document.getElementById('bannerCurrentUnder45Amt');
+  if (elBannerCurrent) elBannerCurrent.innerText = formatINR(currentAmountUnder45);
+  const elBannerTotal = document.getElementById('bannerTotalLedgerAmt');
+  if (elBannerTotal) elBannerTotal.innerText = formatINR(grossSubtotal);
 
   // 30 days from latest bill in selected session
   let cdDueDateStr = '';
@@ -3193,48 +3283,92 @@ function recalculateSettlement() {
   const elFinal = document.getElementById('settleFinalPayable');
   if (elFinal) elFinal.innerText = formatINR(finalPayable);
 
-  // Generate SKIL Master Canonical WhatsApp Text (Rule 4)
-  let waText = `Dear ${window.currentSettlement.partyName},\n\n`;
-  waText += `Please find the settlement details for your pending bills:\n`;
-  if (cdDueDateStr) {
-    waText += `*5% CD Due Date: ${cdDueDateStr}*\n\n`;
-  } else {
-    waText += `\n`;
-  }
-  waText += `📦 *${selectedBills.length} Invoices (${totalCartons} CTN):*\n`;
+  // Generate WhatsApp Text based on selected style
+  const currentStyle = state.statementStyle || 'biz';
+  let waText = '';
 
-  selectedBills.forEach(b => {
-    waText += `• #${b.voucherNumber} (${b.cartons} CTN): *₹${Number(b.gross).toLocaleString('en-IN')}*\n`;
-  });
+  if (currentStyle === 'biz') {
+    const todayStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
+    
+    // Header Greeting strictly isolates overdue (>45 days)
+    if (overdueAmountAbove45 > 0) {
+      waText = `Hello! This is a reminder that your account balance of *₹${Number(overdueAmountAbove45).toLocaleString('en-IN')}* was overdue as of *${todayStr}*. Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.\n\n`;
+      if (currentAmountUnder45 > 0) {
+        waText += `*(Note: Total ledger balance is ₹${Number(grossSubtotal).toLocaleString('en-IN')}, of which ₹${Number(currentAmountUnder45).toLocaleString('en-IN')} is within normal 45-day credit terms)*\n\n`;
+      }
+    } else {
+      waText = `Hello! Please find your Statement of Account from *SKIL LIFESTYLE LLP* as of *${todayStr}*. Your current balance is *₹${Number(grossSubtotal).toLocaleString('en-IN')}* (all bills within normal 45-day credit period).\n\n`;
+    }
 
-  waText += `────────────────────────\n`;
-  waText += `*Total of ${selectedBills.length} Bills: ₹${Number(grossSubtotal).toLocaleString('en-IN')}*\n`;
-  waText += `*Less: 5% CD on Taxable (₹${Number(taxableSubtotal).toLocaleString('en-IN')}): -₹${Number(cdDeduction).toLocaleString('en-IN')}*\n`;
-  waText += `👉 *Net for ${selectedBills.length} Bills: ₹${Number(netBills).toLocaleString('en-IN')}*\n\n`;
+    waText += `📋 *Outstanding Bill-Wise Details (as of ${todayStr}):*\n\n`;
+    selectedBills.forEach(b => {
+      const isOver45 = (b.daysElapsed || 0) > 45;
+      const tag = isOver45 ? `🔴 ${b.daysElapsed}d overdue` : `🟢 ${b.daysElapsed}d (current)`;
+      waText += `• *${b.formattedDate || b.date}* | *#${b.voucherNumber}*: *₹${Number(b.unpaidAmount !== undefined ? b.unpaidAmount : b.gross).toLocaleString('en-IN')}* (${tag})\n`;
+    });
 
-  if (partPaymentAmt > 0) {
-    waText += `➖ *Less: Payment Received: -₹${Number(partPaymentAmt).toLocaleString('en-IN')}*\n`;
-    waText += `👉 *Net Remaining for Bills: ₹${Number(netBillsAfterPayment).toLocaleString('en-IN')}*\n\n`;
-  }
-
-  if (oldAmt > 0) {
-    waText += `➕ *Add: Old ${oldMonth || 'Prior'} Balance: +₹${Number(oldAmt).toLocaleString('en-IN')}* (Net)\n`;
     waText += `────────────────────────\n`;
-  }
+    waText += `*Total Outstanding (${selectedBills.length} Bills): ₹${Number(grossSubtotal).toLocaleString('en-IN')}*\n`;
+    if (overdueAmountAbove45 > 0 && currentAmountUnder45 > 0) {
+      waText += `• *Overdue (>45 Days): ₹${Number(overdueAmountAbove45).toLocaleString('en-IN')}*\n`;
+      waText += `• *Current (≤45 Days): ₹${Number(currentAmountUnder45).toLocaleString('en-IN')}*\n`;
+    }
+    if (applyCd && taxableSubtotal > 0) {
+      waText += `*Less: 5% CD on Taxable (₹${Number(taxableSubtotal).toLocaleString('en-IN')}): -₹${Number(cdDeduction).toLocaleString('en-IN')}*\n`;
+      waText += `👉 *TOTAL TO TRANSFER (with CD): ₹${Number(netBills).toLocaleString('en-IN')}*\n`;
+    }
+    waText += `────────────────────────\n\n`;
+    waText += `*Bank Details:*\n`;
+    waText += `SKIL LIFESTYLE LLP\n`;
+    waText += `Union Bank of India | Rayagada\n`;
+    waText += `A/c: *348621010000129*\n`;
+    waText += `IFSC: *UBIN0934861*\n\n`;
+    waText += `Please process the transfer and share the screenshot so we can issue your CD credit note. Thank you! 🙏\n\n`;
+    waText += `_Sent through SKIL Master App_`;
+  } else {
+    // Canonical Session Settlement Format (Rule 4)
+    waText = `Dear ${window.currentSettlement.partyName},\n\n`;
+    waText += `Please find the settlement details for your pending bills:\n`;
+    if (cdDueDateStr) {
+      waText += `*5% CD Due Date: ${cdDueDateStr}*\n\n`;
+    } else {
+      waText += `\n`;
+    }
+    waText += `📦 *${selectedBills.length} Invoices (${totalCartons} CTN):*\n`;
 
-  waText += `*👉 TOTAL TO TRANSFER: ₹${Number(finalPayable).toLocaleString('en-IN')}*\n`;
-  waText += `────────────────────────\n\n`;
-  waText += `*Bank Details:*\n`;
-  waText += `SKIL LIFESTYLE LLP\n`;
-  waText += `Union Bank of India | Rayagada\n`;
-  waText += `A/c: *348621010000129*\n`;
-  waText += `IFSC: *UBIN0934861*\n\n`;
-  waText += `Please process the transfer and share the screenshot so we can issue your CD credit note. Thank you! 🙏`;
+    selectedBills.forEach(b => {
+      waText += `• #${b.voucherNumber} (${b.cartons} CTN): *₹${Number(b.gross).toLocaleString('en-IN')}*\n`;
+    });
+
+    waText += `────────────────────────\n`;
+    waText += `*Total of ${selectedBills.length} Bills: ₹${Number(grossSubtotal).toLocaleString('en-IN')}*\n`;
+    waText += `*Less: 5% CD on Taxable (₹${Number(taxableSubtotal).toLocaleString('en-IN')}): -₹${Number(cdDeduction).toLocaleString('en-IN')}*\n`;
+    waText += `👉 *Net for ${selectedBills.length} Bills: ₹${Number(netBills).toLocaleString('en-IN')}*\n\n`;
+
+    if (partPaymentAmt > 0) {
+      waText += `➖ *Less: Payment Received: -₹${Number(partPaymentAmt).toLocaleString('en-IN')}*\n`;
+      waText += `👉 *Net Remaining for Bills: ₹${Number(netBillsAfterPayment).toLocaleString('en-IN')}*\n\n`;
+    }
+
+    if (oldAmt > 0) {
+      waText += `➕ *Add: Old ${oldMonth || 'Prior'} Balance: +₹${Number(oldAmt).toLocaleString('en-IN')}* (Net)\n`;
+      waText += `────────────────────────\n`;
+    }
+
+    waText += `*👉 TOTAL TO TRANSFER: ₹${Number(finalPayable).toLocaleString('en-IN')}*\n`;
+    waText += `────────────────────────\n\n`;
+    waText += `*Bank Details:*\n`;
+    waText += `SKIL LIFESTYLE LLP\n`;
+    waText += `Union Bank of India | Rayagada\n`;
+    waText += `A/c: *348621010000129*\n`;
+    waText += `IFSC: *UBIN0934861*\n\n`;
+    waText += `Please process the transfer and share the screenshot so we can issue your CD credit note. Thank you! 🙏`;
+  }
 
   const txtPreview = document.getElementById('txtWhatsAppPreview');
   if (txtPreview) txtPreview.value = waText;
 
-  // Store for export
+  // Store calculated state for PDF generation
   window.currentSettlement.calculated = {
     grossSubtotal,
     taxableSubtotal,
@@ -3247,6 +3381,8 @@ function recalculateSettlement() {
     oldAmt,
     finalPayable,
     cdDueDateStr,
+    overdueAmountAbove45,
+    currentAmountUnder45,
     waText
   };
 }
@@ -3310,9 +3446,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Client-side PDF Generation & Sharing Bridges
+  const btnSharePdf = document.getElementById('btnShareStatementPdf');
+  if (btnSharePdf) {
+    btnSharePdf.addEventListener('click', () => generateAndShareStatementPdf('share'));
+  }
+
+  const btnDownloadPdf = document.getElementById('btnDownloadStatementPdf');
+  if (btnDownloadPdf) {
+    btnDownloadPdf.addEventListener('click', () => generateAndShareStatementPdf('download'));
+  }
+
   const btnPrint = document.getElementById('btnPrintStatementPdf');
   if (btnPrint) {
-    btnPrint.addEventListener('click', () => generateAndPrintCustomerStatement());
+    btnPrint.addEventListener('click', () => generateAndShareStatementPdf('print'));
   }
 
   // Aging search listener
@@ -3332,132 +3479,150 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Generate and Print Customer Statement PDF
-window.generateAndPrintCustomerStatement = function() {
+// Universal Client-Side Vector PDF Statement Generator & Native Share Dispatcher
+window.generateAndShareStatementPdf = async function(mode = 'share') {
   if (!window.currentSettlement?.calculated) return;
   const { partyName, party } = window.currentSettlement;
-  const { grossSubtotal, taxableSubtotal, totalCartons, cdDeduction, netBills, oldMonth, oldAmt, finalPayable } = window.currentSettlement.calculated;
+  const { grossSubtotal, taxableSubtotal, cdDeduction, netBills, overdueAmountAbove45, currentAmountUnder45, waText } = window.currentSettlement.calculated;
   const selectedBills = (window.currentSettlement.bills || []).filter(b => b.checked);
 
   const container = document.getElementById('printStatementContainer');
   if (!container) return;
 
   const todayStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  const cleanParty = (partyName || 'Customer').replace(/[^a-zA-Z0-9_-]/g, '_');
+  const pdfFileName = `Statement_${cleanParty}_${todayStr.replace(/\s+/g, '_')}.pdf`;
 
+  // Render Biz Analyst Style Statement HTML for Device Generation
   container.innerHTML = `
-    <div style="font-family: 'Segoe UI', Calibri, Arial, sans-serif; color: #0F172A; max-width: 800px; margin: 0 auto; padding: 24px;">
-      <!-- Letterhead Header -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0F172A; padding-bottom: 16px; margin-bottom: 20px;">
-        <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0F172A; margin: 0; letter-spacing: -0.01em;">SKIL LIFESTYLE LLP</h1>
-          <div style="font-size: 11.5px; color: #475569; margin-top: 4px; line-height: 1.4;">
-            Registered Office: Main Road, Rayagada, Odisha — 765001<br>
-            <strong>GSTIN:</strong> 37AAYFS7178L1Z9 &bull; <strong>Email:</strong> skillifestyle@gmail.com
-          </div>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-size: 16px; font-weight: 800; color: #0F172A; text-transform: uppercase;">Customer Statement</div>
-          <div style="font-size: 12px; color: #64748B; margin-top: 4px;">Date: <strong>${todayStr}</strong></div>
-          <div style="font-size: 11px; color: #64748B;">Settlement Code: <strong>SKIL-STMT-${Date.now().toString().slice(-6)}</strong></div>
+    <div id="pdfStatementRenderArea" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1E293B; background: #FFFFFF; max-width: 780px; margin: 0 auto; padding: 24px; box-sizing: border-box;">
+      <!-- Greeting Header strictly displaying only overdue > 45 days -->
+      <div style="font-size: 13px; line-height: 1.5; color: #334155; margin-bottom: 22px;">
+        ${overdueAmountAbove45 > 0
+          ? `Hello! This is a reminder that your account balance of <b>₹${Number(overdueAmountAbove45).toLocaleString('en-IN')}</b> was overdue (&gt;45 days) as of <b>${todayStr}</b>. (Total pending balance: <b>₹${Number(grossSubtotal).toLocaleString('en-IN')}</b>). Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.`
+          : `Hello! This is a statement of account as of <b>${todayStr}</b>. Your current pending balance is <b>₹${Number(grossSubtotal).toLocaleString('en-IN')}</b> (all bills within normal 45-day credit period). Please find the Receivable for your reference.`
+        }
+      </div>
+
+      <div style="text-align: center; font-size: 18px; font-weight: 800; letter-spacing: 0.5px; color: #0F172A; margin-bottom: 4px; text-transform: uppercase;">
+        SKIL LIFESTYLE LLP
+      </div>
+
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 16px; font-weight: 700; color: #0F172A; margin-bottom: 4px;">${partyName}</div>
+        <div style="font-size: 12px; color: #475569; line-height: 1.4;">
+          ${party.address ? party.address.replace(/\n/g, ', ') : (party.city || 'Andhra Pradesh')}<br>
+          ${party.gstin ? 'GSTIN: ' + party.gstin : ''} ${party.mobile ? '• Mob: ' + party.mobile : ''}
         </div>
       </div>
 
-      <!-- Customer Details Box -->
-      <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; display: flex; justify-content: space-between;">
-        <div>
-          <div style="font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 700;">Customer / Bill-To:</div>
-          <div style="font-size: 15px; font-weight: 800; color: #0F172A; margin-top: 2px;">${partyName}</div>
-          <div style="font-size: 12px; color: #475569; margin-top: 2px;">GSTIN: ${party.gstin || 'Unregistered'}</div>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-size: 11px; text-transform: uppercase; color: #64748B; font-weight: 700;">Payment Terms:</div>
-          <div style="font-size: 13px; font-weight: 700; color: #16A34A; margin-top: 2px;">5% Cash Discount on Taxable</div>
-          <div style="font-size: 11px; color: #64748B;">Settlement Window: Prompt Transfer</div>
-        </div>
+      <div style="text-align: center; font-size: 14px; font-weight: 700; color: #0F172A; margin: 16px 0 4px 0;">
+        Outstanding Bill wise details
+      </div>
+      <div style="text-align: center; font-size: 12px; color: #64748B; margin-bottom: 16px;">
+        As of Date: <b>${todayStr}</b>
       </div>
 
-      <!-- Invoices Table -->
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px;">
         <thead>
-          <tr style="background: #1E293B; color: #FFFFFF;">
-            <th style="padding: 8px 10px; text-align: left;">INVOICE #</th>
-            <th style="padding: 8px 10px; text-align: left;">DATE</th>
-            <th style="padding: 8px 10px; text-align: center;">CARTONS</th>
-            <th style="padding: 8px 10px; text-align: right;">GROSS TOTAL (₹)</th>
-            <th style="padding: 8px 10px; text-align: right;">TAXABLE (₹)</th>
-            <th style="padding: 8px 10px; text-align: right;">5% CD (₹)</th>
-            <th style="padding: 8px 10px; text-align: right;">NET AMOUNT (₹)</th>
+          <tr style="background: #F1F5F9; color: #0F172A;">
+            <th style="border: 1px solid #94A3B8; padding: 8px 10px; text-align: center; width: 18%;">Date</th>
+            <th style="border: 1px solid #94A3B8; padding: 8px 10px; text-align: center; width: 28%;">Ref. No.</th>
+            <th style="border: 1px solid #94A3B8; padding: 8px 10px; text-align: right; width: 22%;">Pending Amount (₹)</th>
+            <th style="border: 1px solid #94A3B8; padding: 8px 10px; text-align: center; width: 18%;">Due on</th>
+            <th style="border: 1px solid #94A3B8; padding: 8px 10px; text-align: center; width: 14%;">Overdue (Days)</th>
           </tr>
         </thead>
         <tbody>
-          ${selectedBills.map((b, i) => {
-            const isEligible = (b.daysElapsed || 0) <= 30;
-            const cd = isEligible ? Math.round(b.taxable * 0.05 * 100) / 100 : 0;
-            const net = Math.round((b.gross - cd) * 100) / 100;
+          ${selectedBills.map(b => {
+            const isOver45 = (b.daysElapsed || 0) > 45;
             return `
-              <tr style="border-bottom: 1px solid #E2E8F0; background: ${i % 2 === 0 ? '#FFFFFF' : '#F8FAFC'};">
-                <td style="padding: 8px 10px; font-weight: 700; color: #0F172A;">#${b.voucherNumber}</td>
-                <td style="padding: 8px 10px;">${b.formattedDate || b.date}</td>
-                <td style="padding: 8px 10px; text-align: center;">${b.cartons} CTN</td>
-                <td style="padding: 8px 10px; text-align: right; font-weight: 600;">₹${Number(b.gross).toLocaleString('en-IN')}</td>
-                <td style="padding: 8px 10px; text-align: right; color: #475569;">₹${Number(b.taxable).toLocaleString('en-IN')}</td>
-                <td style="padding: 8px 10px; text-align: right; color: #16A34A; font-weight: 700;">${cd > 0 ? `-₹${Number(cd).toLocaleString('en-IN')}` : '₹0'}</td>
-                <td style="padding: 8px 10px; text-align: right; font-weight: 800; color: #0F172A;">₹${Number(net).toLocaleString('en-IN')}</td>
+              <tr>
+                <td style="border: 1px solid #CBD5E1; padding: 7px 10px; text-align: center;">${b.formattedDate || b.date}</td>
+                <td style="border: 1px solid #CBD5E1; padding: 7px 10px; text-align: center; font-weight: 700;">#${b.voucherNumber}</td>
+                <td style="border: 1px solid #CBD5E1; padding: 7px 10px; text-align: right;">₹${Number(b.unpaidAmount !== undefined ? b.unpaidAmount : b.gross).toLocaleString('en-IN')}</td>
+                <td style="border: 1px solid #CBD5E1; padding: 7px 10px; text-align: center;">${b.formattedDueDate || b.dueDate || '—'}</td>
+                <td style="border: 1px solid #CBD5E1; padding: 7px 10px; text-align: center; ${isOver45 ? 'color: #DC2626; font-weight: 700;' : 'color: #16A34A; font-weight: 600;'}">${b.daysElapsed || 0}</td>
               </tr>
             `;
           }).join('')}
         </tbody>
       </table>
 
-      <!-- Mathematical Summary Box -->
-      <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
-        <div style="width: 320px; background: #F8FAFC; border: 1.5px solid #CBD5E1; border-radius: 8px; padding: 12px 16px; font-size: 12.5px;">
-          <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-            <span>Total of ${selectedBills.length} Bills (Gross):</span>
-            <strong>₹${Number(grossSubtotal).toLocaleString('en-IN')}</strong>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="border: 1.5px solid #0F172A; padding: 8px 16px; display: inline-block; font-weight: 800; font-size: 14px; background: #F8FAFC;">
+          Total Pending: ₹${Number(grossSubtotal).toLocaleString('en-IN')}
+        </div>
+        ${overdueAmountAbove45 > 0 && currentAmountUnder45 > 0 ? `
+          <div style="font-size: 11.5px; margin-top: 6px; color: #475569;">
+            🔴 Overdue (>45 Days): <b style="color: #DC2626;">₹${Number(overdueAmountAbove45).toLocaleString('en-IN')}</b> &bull; 
+            🟢 Current (≤45 Days): <b style="color: #16A34A;">₹${Number(currentAmountUnder45).toLocaleString('en-IN')}</b>
           </div>
-          <div style="display: flex; justify-content: space-between; color: #16A34A; margin-bottom: 6px;">
-            <span>Less: 5% CD on Taxable (₹${Number(taxableSubtotal).toLocaleString('en-IN')}):</span>
-            <strong>-₹${Number(cdDeduction).toLocaleString('en-IN')}</strong>
-          </div>
-          <div style="display: flex; justify-content: space-between; border-top: 1px solid #CBD5E1; padding-top: 6px; margin-bottom: 6px; font-weight: 700;">
-            <span>Net for ${selectedBills.length} Invoices:</span>
-            <span>₹${Number(netBills).toLocaleString('en-IN')}</span>
-          </div>
-          ${oldAmt > 0 ? `
-            <div style="display: flex; justify-content: space-between; color: #D97706; margin-bottom: 6px;">
-              <span>➕ Add: Old ${oldMonth || 'Prior'} Balance (Net):</span>
-              <strong>+₹${Number(oldAmt).toLocaleString('en-IN')}</strong>
-            </div>
-          ` : ''}
-          <div style="border-top: 2px solid #0F172A; margin: 8px 0 6px 0;"></div>
-          <div style="display: flex; justify-content: space-between; font-size: 14.5px; font-weight: 800; color: #0F172A;">
-            <span>TOTAL TO REMIT:</span>
-            <span style="color: #DC2626; font-size: 17px;">₹${Number(finalPayable).toLocaleString('en-IN')}</span>
-          </div>
+        ` : ''}
+      </div>
+
+      <div style="background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; font-size: 12px;">
+        <h4 style="margin: 0 0 6px 0; color: #166534; font-size: 13px; font-weight: 700;">Prompt Payment 5% Cash Discount (CD) Option:</h4>
+        <div>• Total Outstanding: <b>₹${Number(grossSubtotal).toLocaleString('en-IN')}</b></div>
+        <div>• Less 5% CD on Taxable (₹${Number(taxableSubtotal).toLocaleString('en-IN')}): <b>-₹${Number(cdDeduction).toLocaleString('en-IN')}</b></div>
+        <div style="font-size: 13.5px; font-weight: 800; color: #15803D; margin-top: 6px;">
+          👉 NET PAYABLE TO TRANSFER: ₹${Number(netBills).toLocaleString('en-IN')}
         </div>
       </div>
 
-      <!-- Union Bank Remittance Instructions & Signatory -->
-      <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; border-top: 1px solid #CBD5E1; padding-top: 16px;">
-        <div style="background: #F1F5F9; border-radius: 8px; padding: 12px 14px; font-size: 11.5px; line-height: 1.5;">
-          <strong style="color: #0F172A; font-size: 12px; display: block; margin-bottom: 4px;">Bank Remittance Details:</strong>
-          A/c Name: <strong>SKIL LIFESTYLE LLP</strong><br>
-          Bank: <strong>Union Bank of India</strong> | Branch: <strong>Rayagada</strong><br>
-          Current A/c No: <strong>348621010000129</strong><br>
-          IFSC Code: <strong>UBIN0934861</strong>
-        </div>
-
-        <div style="text-align: right; display: flex; flex-direction: column; justify-content: flex-end;">
-          <div style="font-size: 12px; font-weight: 800; color: #0F172A;">For SKIL LIFESTYLE LLP</div>
-          <div style="height: 40px;"></div>
-          <div style="font-size: 11px; color: #64748B;">Authorized Signatory / Partner</div>
-        </div>
+      <div style="font-size: 11px; line-height: 1.5; color: #475569; border-top: 1px solid #E2E8F0; padding-top: 14px;">
+        <b>Regards,</b><br>
+        <b>SKIL LIFESTYLE LLP</b><br>
+        Shop No-7A, D.No.28-10-4, Floor No-3, Vasavi Plaza, Theatre Road, Jagadamba Jn, Visakhapatnam - 530020<br>
+        <b>GSTIN:</b> 37AFZFS2777J1ZV • <b>Mob:</b> 9348343310<br>
+        <b>Bank Details:</b> Union Bank of India | Rayagada • <b>A/c:</b> 348621010000129 • <b>IFSC:</b> UBIN0934861<br>
+        <div style="margin-top: 8px; font-size: 10px; color: #64748B;">Generated via SKIL Master Mobile App &bull; Biz Analyst Standard Format</div>
       </div>
     </div>
   `;
 
-  window.skilTriggerPrint(`SKIL_Statement_${(partyName || 'Customer').replace(/[^a-zA-Z0-9_-]/g, '_')}`);
+  // Check if html2pdf is available on device
+  const renderElem = document.getElementById('pdfStatementRenderArea');
+  if (!window.html2pdf || !renderElem) {
+    window.skilTriggerPrint(`SKIL_Statement_${cleanParty}`);
+    return;
+  }
+
+  const opt = {
+    margin: [8, 8, 8, 8],
+    filename: pdfFileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  try {
+    if (mode === 'share') {
+      const pdfWorker = html2pdf().set(opt).from(renderElem);
+      const pdfBlob = await pdfWorker.outputPdf('blob');
+      const pdfFile = new File([pdfBlob], pdfFileName, { type: 'application/pdf' });
+
+      // If mobile browser / WebView supports native Web Share API with files
+      if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+        await navigator.share({
+          title: `Overdue Statement - ${partyName}`,
+          text: waText,
+          files: [pdfFile]
+        });
+      } else {
+        // Fallback: download the generated PDF to phone
+        await pdfWorker.save(pdfFileName);
+        alert(`Statement PDF saved to Downloads: "${pdfFileName}"!\nYou can now attach it directly in WhatsApp.`);
+      }
+    } else if (mode === 'download') {
+      await html2pdf().set(opt).from(renderElem).save(pdfFileName);
+    } else {
+      window.skilTriggerPrint(`SKIL_Statement_${cleanParty}`);
+    }
+  } catch (err) {
+    console.warn('PDF dispatch action error:', err);
+    window.skilTriggerPrint(`SKIL_Statement_${cleanParty}`);
+  }
 };
 
 // ==========================================================================

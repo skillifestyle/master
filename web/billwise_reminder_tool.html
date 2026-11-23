@@ -407,8 +407,17 @@
       const openBills = (party.bills || []).filter(b => (b.unpaidAmount !== undefined ? b.unpaidAmount : b.amount) > 0);
       const totalPending = party.netDue || openBills.reduce((s,b) => s + (b.unpaidAmount || b.amount), 0);
 
+      const overdueAbove45 = openBills.filter(b => (b.daysElapsed || 0) > 45);
+      const overdueAbove45Amt = overdueAbove45.reduce((s, b) => s + (b.unpaidAmount !== undefined ? b.unpaidAmount : b.amount), 0);
+      const currentUnder45 = openBills.filter(b => (b.daysElapsed || 0) <= 45);
+      const currentUnder45Amt = currentUnder45.reduce((s, b) => s + (b.unpaidAmount !== undefined ? b.unpaidAmount : b.amount), 0);
+
       document.getElementById('asOfDate').innerText = AS_OF_STR;
-      document.getElementById('statementGreeting').innerHTML = `Hello! This is a reminder that your account balance of <b>₹${Number(totalPending).toLocaleString('en-IN')}</b> was overdue as of <b>${AS_OF_STR}</b>. Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.`;
+      if (overdueAbove45Amt > 0) {
+        document.getElementById('statementGreeting').innerHTML = `Hello! This is a reminder that your account balance of <b>₹${Number(overdueAbove45Amt).toLocaleString('en-IN')}</b> was overdue (>45 days) as of <b>${AS_OF_STR}</b>. (Total pending balance: <b>₹${Number(totalPending).toLocaleString('en-IN')}</b>). Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.`;
+      } else {
+        document.getElementById('statementGreeting').innerHTML = `Hello! Please find your statement of account as of <b>${AS_OF_STR}</b>. Your current balance is <b>₹${Number(totalPending).toLocaleString('en-IN')}</b> (all bills within normal 45-day credit terms). Please find the Receivable for your reference.`;
+      }
 
       document.getElementById('partyName').innerText = party.partyName;
       document.getElementById('partyDetails').innerHTML = `${party.address ? party.address.replace(/\\n/g, ', ') : (party.city || 'Andhra Pradesh')}<br>${party.gstin ? 'GSTIN: ' + party.gstin : ''} ${party.mobile ? '• Mob: ' + party.mobile : ''}`;
@@ -428,7 +437,8 @@
         const taxable = b.taxableAmount ? Math.abs(b.taxableAmount) : Math.round((pending / 1.05) * 100) / 100;
         totalTaxable += taxable;
 
-        waBillLines.push(`• *${dateStr}* | *${refNo}*: *₹${Number(pending).toLocaleString('en-IN')}* (Due: ${dueStr} • ${overdue}d overdue)`);
+        const tag = overdue > 45 ? `🔴 ${overdue}d overdue` : `🟢 ${overdue}d (current)`;
+        waBillLines.push(`• *${dateStr}* | *${refNo}*: *₹${Number(pending).toLocaleString('en-IN')}* (${tag})`);
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -436,12 +446,20 @@
           <td class="text-center"><b>${refNo}</b></td>
           <td class="text-right">₹${Number(pending).toLocaleString('en-IN')}</td>
           <td class="text-center">${dueStr}</td>
-          <td class="text-center" style="${overdue > 30 ? 'color: #DC2626; font-weight: 700;' : ''}">${overdue}</td>
+          <td class="text-center" style="${overdue > 45 ? 'color: #DC2626; font-weight: 700;' : 'color: #16A34A;'}">${overdue}</td>
         `;
         tbody.appendChild(tr);
       });
 
-      document.getElementById('totalBox').innerText = `Total: ₹${Number(totalPending).toLocaleString('en-IN')}`;
+      document.getElementById('totalBox').innerHTML = `
+        Total: ₹${Number(totalPending).toLocaleString('en-IN')}
+        ${overdueAbove45Amt > 0 && currentUnder45Amt > 0 ? `
+          <div style="font-size: 11px; margin-top: 4px; color: #475569; font-weight: normal;">
+            🔴 Overdue (>45d): <b>₹${Number(overdueAbove45Amt).toLocaleString('en-IN')}</b> &bull; 
+            🟢 Current (≤45d): <b>₹${Number(currentUnder45Amt).toLocaleString('en-IN')}</b>
+          </div>
+        ` : ''}
+      `;
 
       // CD Box for Debtors
       const cdBox = document.getElementById('cdBox');
@@ -457,12 +475,26 @@
         cdBox.style.display = 'none';
       }
 
-      // Generate WhatsApp Text
-      let waText = `Hello! This is a reminder from *SKIL LIFESTYLE LLP* that your account balance of *₹${Number(totalPending).toLocaleString('en-IN')}* was overdue as of ${AS_OF_STR}.\n\n`;
+      // Generate WhatsApp Text strictly putting only overdue > 45 days on top
+      let waText = '';
+      if (overdueAbove45Amt > 0) {
+        waText = `Hello! This is a reminder from *SKIL LIFESTYLE LLP* that your account balance of *₹${Number(overdueAbove45Amt).toLocaleString('en-IN')}* was overdue as of ${AS_OF_STR}.\n`;
+        if (currentUnder45Amt > 0) {
+          waText += `*(Total Account Balance: ₹${Number(totalPending).toLocaleString('en-IN')}, of which ₹${Number(currentUnder45Amt).toLocaleString('en-IN')} is within normal 45-day terms)*\n\n`;
+        } else {
+          waText += `\n`;
+        }
+      } else {
+        waText = `Hello! Please find your Statement of Account from *SKIL LIFESTYLE LLP* as of ${AS_OF_STR}. Your current balance is *₹${Number(totalPending).toLocaleString('en-IN')}* (all bills within normal 45-day credit period).\n\n`;
+      }
       waText += `📋 *Outstanding Bill-Wise Details:*\n`;
       waText += waBillLines.join('\n') + '\n';
       waText += `────────────────────────\n`;
       waText += `*Total Outstanding (${openBills.length} Bills): ₹${Number(totalPending).toLocaleString('en-IN')}*\n`;
+      if (overdueAbove45Amt > 0 && currentUnder45Amt > 0) {
+        waText += `• Overdue (>45 Days): *₹${Number(overdueAbove45Amt).toLocaleString('en-IN')}*\n`;
+        waText += `• Current (≤45 Days): *₹${Number(currentUnder45Amt).toLocaleString('en-IN')}*\n`;
+      }
       if (type === 'debtor') {
         waText += `*Less: 5% Cash Discount on Taxable (₹${Number(totalTaxable).toLocaleString('en-IN')}): -₹${Number(cdAmount).toLocaleString('en-IN')}*\n`;
         waText += `👉 *TOTAL TO TRANSFER (with CD): ₹${Number(netAfterCd).toLocaleString('en-IN')}*\n`;

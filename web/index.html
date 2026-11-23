@@ -2790,6 +2790,38 @@
       </div>
 
       <div class="modal-body settlement-modal-body" style="padding: 20px;">
+        <!-- Statement Type Selector & Overdue Filter -->
+        <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 12px; font-weight: 800; color: #0F172A;">Format:</span>
+            <div class="segmented-pills" style="margin: 0;">
+              <button type="button" class="segment-btn active" id="btnStmtStyleBiz" onclick="setStatementStyle('biz')">
+                📊 Biz Analyst Overdue Format
+              </button>
+              <button type="button" class="segment-btn" id="btnStmtStyleCanonical" onclick="setStatementStyle('canonical')">
+                📑 Standard Settlement
+              </button>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button type="button" class="btn-text-action" id="btnFilterOverdueOnly" onclick="toggleOverdueOnlyBills()" style="background: #FEF2F2; border: 1px solid #FECACA; color: #DC2626; padding: 5px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; cursor: pointer;">
+              🔴 Filter: Overdue (&gt;45 Days) Only
+            </button>
+          </div>
+        </div>
+
+        <!-- Overdue Top Notification Banner -->
+        <div id="settleOverdueBanner" style="background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <span style="font-size: 11px; font-weight: 700; color: #1E40AF; text-transform: uppercase;">Overdue Amount on Top (&gt;45 Days):</span>
+            <div style="font-size: 17px; font-weight: 800; color: #DC2626;" id="bannerOverdueAbove45Amt">₹0</div>
+          </div>
+          <div style="font-size: 11.5px; color: #475569; text-align: right;">
+            Current Bills (&le;45 Days): <strong id="bannerCurrentUnder45Amt">₹0</strong><br>
+            Total Ledger Balance: <strong id="bannerTotalLedgerAmt">₹0</strong>
+          </div>
+        </div>
+
         <div class="settlement-dual-grid">
           <!-- Left Column: Bill Checkboxes & Math Breakdown -->
           <div class="settlement-col-left">
@@ -2883,20 +2915,30 @@
             <textarea class="whatsapp-preview-textarea" id="txtWhatsAppPreview" readonly style="width: 100%; height: 260px; font-family: monospace; font-size: 11.5px; background: #0F172A; color: #F8FAFC; border: 1px solid #334155; border-radius: 10px; padding: 12px; resize: none; line-height: 1.5;"></textarea>
 
             <!-- Action Buttons Grid -->
-            <div class="settlement-actions-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px;">
-              <button class="btn-settle-action" id="btnCopyWhatsAppText" style="background: #22C55E; color: #FFFFFF; font-weight: 800; border: none; padding: 12px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px;">
-                <i data-lucide="copy" style="width: 16px; height: 16px;"></i>
-                <span>Copy WhatsApp Text</span>
-              </button>
-
-              <button class="btn-settle-action" id="btnOpenWhatsAppDirect" style="background: #15803D; color: #FFFFFF; font-weight: 800; border: none; padding: 12px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px;">
-                <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+            <div class="settlement-actions-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px;">
+              <button class="btn-settle-action" id="btnOpenWhatsAppDirect" style="background: #15803D; color: #FFFFFF; font-weight: 800; border: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px;">
+                <i data-lucide="send" style="width: 15px; height: 15px;"></i>
                 <span>Open in WhatsApp</span>
               </button>
 
-              <button class="btn-settle-action" id="btnPrintStatementPdf" style="grid-column: span 2; background: #0F172A; color: #FFFFFF; font-weight: 800; border: 1px solid #334155; padding: 12px 14px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px;">
-                <i data-lucide="printer" style="width: 16px; height: 16px;"></i>
-                <span>Download / Print Customer Statement PDF</span>
+              <button class="btn-settle-action" id="btnCopyWhatsAppText" style="background: #0284C7; color: #FFFFFF; font-weight: 800; border: none; padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px;">
+                <i data-lucide="copy" style="width: 15px; height: 15px;"></i>
+                <span>Copy Message</span>
+              </button>
+
+              <button class="btn-settle-action" id="btnShareStatementPdf" style="background: #16A34A; color: #FFFFFF; font-weight: 800; border: none; padding: 11px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12.5px;">
+                <i data-lucide="share-2" style="width: 15px; height: 15px;"></i>
+                <span>⚡ Generate &amp; Share PDF</span>
+              </button>
+
+              <button class="btn-settle-action" id="btnDownloadStatementPdf" style="background: #0F172A; color: #FFFFFF; font-weight: 800; border: 1px solid #334155; padding: 11px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12.5px;">
+                <i data-lucide="download" style="width: 15px; height: 15px;"></i>
+                <span>📥 Download PDF</span>
+              </button>
+
+              <button class="btn-settle-action" id="btnPrintStatementPdf" style="grid-column: span 2; background: #F8FAFC; color: #334155; font-weight: 700; border: 1px solid #CBD5E1; padding: 8px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11.5px;">
+                <i data-lucide="printer" style="width: 14px; height: 14px;"></i>
+                <span>Print / Spooler Document</span>
               </button>
             </div>
 
@@ -2914,6 +2956,7 @@
   <div id="printStatementContainer" class="print-statement-area"></div>
 
   <!-- Application Logic -->
-  <script src="app.js?v=2.2.1"></script>
+  <script src="assets/html2pdf.bundle.min.js"></script>
+  <script src="app.js?v=2.2.2"></script>
 </body>
 </html>
