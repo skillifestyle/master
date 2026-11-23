@@ -4,7 +4,7 @@ class TallyClient {
   constructor(options = {}) {
     this.host = options.host || '127.0.0.1';
     this.port = options.port || 9000;
-    this.timeout = options.timeout || 8000;
+    this.timeout = options.timeout || 45000;
     this.interRequestDelayMs = 60; // Brief delay to let Tally single-thread socket recycle
   }
 

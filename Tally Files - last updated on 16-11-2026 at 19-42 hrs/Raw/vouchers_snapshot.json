@@ -1,4 +1,7 @@
 [
+  {},
+  {},
+  {},
   {
     "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000001",
     "voucherNumber": "1",
@@ -1688,6 +1691,14 @@
     "amount": 4646
   },
   {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-000000f4",
+    "voucherNumber": "8",
+    "voucherType": "Credit Note",
+    "date": "20261031",
+    "partyName": "DELIGHT FOOT WEAR",
+    "amount": 59971
+  },
+  {
     "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-000000e3",
     "voucherNumber": "26",
     "voucherType": "Payment",
@@ -1718,6 +1729,22 @@
     "date": "20261102",
     "partyName": "Union Bank Current A/c",
     "amount": 322.9
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000010d",
+    "voucherNumber": "10",
+    "voucherType": "Debit Note",
+    "date": "20261102",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 235
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000010e",
+    "voucherNumber": "11",
+    "voucherType": "Debit Note",
+    "date": "20261102",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 1869
   },
   {
     "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-000000ed",
@@ -1766,14 +1793,6 @@
     "date": "20261110",
     "partyName": "M/S. RAJAN TRADERS",
     "amount": 25000
-  },
-  {
-    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-000000f4",
-    "voucherNumber": "8",
-    "voucherType": "Credit Note",
-    "date": "20261031",
-    "partyName": "DELIGHT FOOT WEAR",
-    "amount": 59971
   },
   {
     "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-000000f3",
@@ -1926,5 +1945,205 @@
     "date": "20261116",
     "partyName": "JYOTHI FOOT WEAR",
     "amount": 50454
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000107",
+    "voucherNumber": "10",
+    "voucherType": "Credit Note",
+    "date": "20261117",
+    "partyName": "M/S.SHREE FOOTWEAR",
+    "amount": 6434
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000108",
+    "voucherNumber": "11",
+    "voucherType": "Credit Note",
+    "date": "20261117",
+    "partyName": "M/s Sri Brundabana Enterprises, Rayagada",
+    "amount": 4974
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000109",
+    "voucherNumber": "12",
+    "voucherType": "Credit Note",
+    "date": "20261117",
+    "partyName": "M/S SRI BRUNDABAN ENTERPRISES, MALKANGIRI",
+    "amount": 4781
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000010a",
+    "voucherNumber": "21",
+    "voucherType": "Receipt",
+    "date": "20261117",
+    "partyName": "M/S SUSHILA BOOT HOUSE",
+    "amount": 50000
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000010b",
+    "voucherNumber": "86",
+    "voucherType": "Purchase",
+    "date": "20261118",
+    "partyName": "Cubix Footcare",
+    "amount": 69422
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000010c",
+    "voucherNumber": "SKIL-087",
+    "voucherType": "Sales",
+    "date": "20261118",
+    "partyName": "M/S.SHREE FOOTWEAR",
+    "amount": 69422
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000010f",
+    "voucherNumber": "12",
+    "voucherType": "Debit Note",
+    "date": "20261118",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 59134
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000110",
+    "voucherNumber": "87",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 20122
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000111",
+    "voucherNumber": "88",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 30183
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000112",
+    "voucherNumber": "89",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 99236
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000116",
+    "voucherNumber": "90",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Cubix Footcare",
+    "amount": 77156
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000113",
+    "voucherNumber": "SKIL-088",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "K G N FOOTWARE",
+    "amount": 19951
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000114",
+    "voucherNumber": "SKIL-089",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "M/S.SHREE FOOTWEAR",
+    "amount": 29926
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000115",
+    "voucherNumber": "SKIL-090",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "M/s Sri Brundabana Enterprises, Rayagada",
+    "amount": 100365
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000117",
+    "voucherNumber": "SKIL-091",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "FAMOUS FOOT WEAR",
+    "amount": 106747
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000118",
+    "voucherNumber": "91",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 33095
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000119",
+    "voucherNumber": "92",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 17974
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000011a",
+    "voucherNumber": "93",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 2138
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000011b",
+    "voucherNumber": "94",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 72573
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000011c",
+    "voucherNumber": "95",
+    "voucherType": "Purchase",
+    "date": "20261119",
+    "partyName": "Ajanta Shoes India Pvt. Ltd.",
+    "amount": 188127
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000011d",
+    "voucherNumber": "SKIL-092",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "M/s Sri Brundabana Enterprises, Rayagada",
+    "amount": 33093
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000011e",
+    "voucherNumber": "SKIL-093",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "DELIGHT FOOT WEAR",
+    "amount": 17929
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000011f",
+    "voucherNumber": "SKIL-094",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "DELIGHT FOOT WEAR",
+    "amount": 2138
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000120",
+    "voucherNumber": "SKIL-095",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "DELIGHT FOOT WEAR",
+    "amount": 72518
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000121",
+    "voucherNumber": "SKIL-096",
+    "voucherType": "Sales",
+    "date": "20261119",
+    "partyName": "M/s Sri Brundabana Enterprises, Rayagada",
+    "amount": 197849
   }
 ]

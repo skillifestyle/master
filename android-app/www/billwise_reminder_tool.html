@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKIL Master — Bill-Wise Overdue Reminder & Statement Tool</title>
+  <style>
+    :root {
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --border: #CBD5E1;
+      --text: #0F172A;
+      --text-muted: #475569;
+      --slate-header: #1E293B;
+      --accent: #2563EB;
+      --success: #16A34A;
+      --danger: #DC2626;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .top-controls {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .select-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .select-group label {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--slate-header);
+      white-space: nowrap;
+    }
+    select {
+      flex: 1;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      background: #FFFFFF;
+      outline: none;
+    }
+    select:focus {
+      border-color: var(--accent);
+    }
+    .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 9px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .btn-wa { background: #22C55E; color: #FFFFFF; }
+    .btn-wa:hover { background: #16A34A; }
+    .btn-copy { background: #F1F5F9; color: #0F172A; border-color: var(--border); }
+    .btn-copy:hover { background: #E2E8F0; }
+    .btn-print { background: var(--slate-header); color: #FFFFFF; }
+    .btn-print:hover { background: #334155; }
+    
+    /* Biz Analyst Style Invoice Card */
+    .statement-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 36px 40px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+    }
+    .statement-greeting {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .statement-greeting b { color: var(--text); }
+    .issuer-header {
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .issuer-title {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--slate-header);
+      text-transform: uppercase;
+    }
+    .party-block {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .party-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .party-sub {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .details-heading {
+      text-align: center;
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--slate-header);
+      margin: 24px 0 4px 0;
+    }
+    .as-of-line {
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 13px;
+    }
+    th {
+      border: 1px solid #94A3B8;
+      background: #F1F5F9;
+      padding: 10px 12px;
+      font-weight: 700;
+      color: var(--slate-header);
+      text-align: center;
+    }
+    td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      color: var(--text);
+    }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .text-bold { font-weight: 700; }
+    .total-box-container {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .total-box {
+      border: 1.5px solid var(--slate-header);
+      background: #F8FAFC;
+      padding: 8px 24px;
+      display: inline-block;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--slate-header);
+    }
+    .cd-incentive-box {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .cd-incentive-box h4 {
+      margin: 0 0 8px 0;
+      color: #166534;
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .cd-net-line {
+      margin-top: 8px;
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #15803D;
+    }
+    .footer-section {
+      border-top: 1px solid #E2E8F0;
+      padding-top: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .footer-section b { color: var(--text); }
+    .biz-badge {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #94A3B8;
+    }
+
+    /* WhatsApp preview drawer */
+    .wa-preview-box {
+      background: #F8FAFC;
+      border: 1px dashed var(--border);
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 24px;
+    }
+    .wa-preview-box h4 {
+      margin: 0 0 10px 0;
+      font-size: 13px;
+      color: var(--slate-header);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    textarea {
+      width: 100%;
+      height: 140px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 12px;
+      color: #1E293B;
+      background: #FFFFFF;
+      resize: vertical;
+      outline: none;
+    }
+
+    @media print {
+      body { background: #FFFFFF; padding: 0; }
+      .top-controls, .wa-preview-box { display: none !important; }
+      .statement-card { border: none; box-shadow: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Top Action Controls -->
+    <div class="top-controls">
+      <div class="select-group">
+        <label for="partySelect">Select Party:</label>
+        <select id="partySelect"></select>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-wa" id="btnShareWhatsApp">
+          <span>💬 WhatsApp Reminder</span>
+        </button>
+        <button class="btn btn-copy" id="btnCopyWa">
+          <span>📋 Copy Text</span>
+        </button>
+        <button class="btn btn-print" onclick="window.print()">
+          <span>🖨️ Print / PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Biz Analyst Style Statement Output -->
+    <div class="statement-card" id="statementCard">
+      <div class="statement-greeting" id="statementGreeting">
+        Loading statement details...
+      </div>
+
+      <div class="issuer-header">
+        <div class="issuer-title" id="issuerTitle">SKIL LIFESTYLE LLP</div>
+      </div>
+
+      <div class="party-block">
+        <div class="party-title" id="partyName">Party Name</div>
+        <div class="party-sub" id="partyDetails">Address • GSTIN • Mobile</div>
+      </div>
+
+      <div class="details-heading">Outstanding Bill wise details</div>
+      <div class="as-of-date">As of Date: <b id="asOfDate">23 Nov 26</b></div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 18%;">Date</th>
+            <th style="width: 28%;">Ref. No.</th>
+            <th style="width: 22%;">Pending Amount (₹)</th>
+            <th style="width: 18%;">Due on</th>
+            <th style="width: 14%;">Overdue (Days)</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="5" class="text-center">Loading bills...</td></tr>
+        </tbody>
+      </table>
+
+      <div class="total-container" style="text-align: center; margin-bottom: 28px;">
+        <div class="total-box" id="totalBox">
+          Total Pending: ₹0
+        </div>
+      </div>
+
+      <div class="cd-incentive-box" id="cdBox" style="display: none;">
+        <h4>Prompt Payment 5% Cash Discount (CD) Option:</h4>
+        <div id="cdGrossLine">• Total Outstanding: <b>₹0</b></div>
+        <div id="cdDeductLine">• Less 5% CD on Taxable (₹0): <b>-₹0</b></div>
+        <div class="cd-net-line" id="cdNetLine">👉 TOTAL TO TRANSFER (with CD): ₹0</div>
+      </div>
+
+      <div class="footer-section">
+        <b>Regards,</b><br>
+        <b id="footerCompany">SKIL LIFESTYLE LLP</b><br>
+        Shop No-7A, D.No.28-10-4, Floor No-3, Vasavi Plaza, Theatre Road, Jagadamba Jn, Visakhapatnam - 530020<br>
+        <b>GSTIN:</b> 37AFZFS2777J1ZV • <b>Mob:</b> 9348343310<br>
+        <b>Bank Details:</b> Union Bank of India | Rayagada • <b>A/c:</b> 348621010000129 • <b>IFSC:</b> UBIN0934861<br>
+        <div class="biz-badge">Sent through SKIL Master App • Biz Analyst Standard Format</div>
+      </div>
+
+      <!-- Raw WhatsApp Preview -->
+      <div class="wa-preview-box">
+        <h4>
+          <span>WhatsApp Message Preview (Ready to Send)</span>
+          <span style="font-size: 11px; font-weight: normal; color: #64748B;">Auto-formatted per SKIL guidelines</span>
+        </h4>
+        <textarea id="txtWaPreview" readonly></textarea>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let globalAging = null;
+    const AS_OF_STR = '23 Nov 26';
+
+    async function init() {
+      try {
+        const res = await fetch('./data/aging.json?v=' + Date.now());
+        if (!res.ok) throw new Error('Could not load aging.json');
+        globalAging = await res.json();
+        populatePartyDropdown();
+      } catch (err) {
+        document.getElementById('statementGreeting').innerHTML = '<span style="color:red;">Error loading data: ' + err.message + '</span>';
+      }
+    }
+
+    function populatePartyDropdown() {
+      const select = document.getElementById('partySelect');
+      select.innerHTML = '';
+
+      const optGroupDebtors = document.createElement('optgroup');
+      optGroupDebtors.label = 'Customers (Sundry Debtors)';
+
+      const debtors = (globalAging.debtors?.parties || []).filter(p => p.netDue > 0);
+      debtors.sort((a,b) => b.netDue - a.netDue);
+
+      debtors.forEach(d => {
+        const opt = document.createElement('option');
+        opt.value = 'debtor:' + d.partyName;
+        opt.text = `${d.partyName} (₹${Number(d.netDue).toLocaleString('en-IN')})`;
+        optGroupDebtors.appendChild(opt);
+      });
+      select.appendChild(optGroupDebtors);
+
+      const optGroupCreditors = document.createElement('optgroup');
+      optGroupCreditors.label = 'Suppliers (Sundry Creditors)';
+      const creditors = (globalAging.creditors?.parties || []).filter(p => p.netDue > 0);
+      creditors.sort((a,b) => b.netDue - a.netDue);
+
+      creditors.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = 'creditor:' + c.partyName;
+        opt.text = `${c.partyName} (₹${Number(c.netDue).toLocaleString('en-IN')})`;
+        optGroupCreditors.appendChild(opt);
+      });
+      select.appendChild(optGroupCreditors);
+
+      select.addEventListener('change', () => renderSelectedParty());
+      if (debtors.length > 0) {
+        select.value = 'debtor:' + debtors[0].partyName;
+        renderSelectedParty();
+      }
+    }
+
+    function renderSelectedParty() {
+      const select = document.getElementById('partySelect');
+      const [type, partyName] = select.value.split(':');
+      
+      const list = type === 'debtor' ? globalAging.debtors.parties : globalAging.creditors.parties;
+      const party = list.find(p => p.partyName === partyName);
+      if (!party) return;
+
+      const openBills = (party.bills || []).filter(b => (b.unpaidAmount !== undefined ? b.unpaidAmount : b.amount) > 0);
+      const totalPending = party.netDue || openBills.reduce((s,b) => s + (b.unpaidAmount || b.amount), 0);
+
+      document.getElementById('asOfDate').innerText = AS_OF_STR;
+      document.getElementById('statementGreeting').innerHTML = `Hello! This is a reminder that your account balance of <b>₹${Number(totalPending).toLocaleString('en-IN')}</b> was overdue as of <b>${AS_OF_STR}</b>. Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.`;
+
+      document.getElementById('partyName').innerText = party.partyName;
+      document.getElementById('partyDetails').innerHTML = `${party.address ? party.address.replace(/\\n/g, ', ') : (party.city || 'Andhra Pradesh')}<br>${party.gstin ? 'GSTIN: ' + party.gstin : ''} ${party.mobile ? '• Mob: ' + party.mobile : ''}`;
+
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+
+      let totalTaxable = 0;
+      let waBillLines = [];
+
+      openBills.forEach(b => {
+        const pending = b.unpaidAmount !== undefined ? b.unpaidAmount : b.amount;
+        const refNo = b.voucherNumber ? `#${b.voucherNumber}` : (b.reference || 'N/A');
+        const overdue = b.daysElapsed || 0;
+        const dateStr = b.formattedDate || b.date;
+        const dueStr = b.formattedDueDate || b.dueDate;
+        const taxable = b.taxableAmount ? Math.abs(b.taxableAmount) : Math.round((pending / 1.05) * 100) / 100;
+        totalTaxable += taxable;
+
+        waBillLines.push(`• *${dateStr}* | *${refNo}*: *₹${Number(pending).toLocaleString('en-IN')}* (Due: ${dueStr} • ${overdue}d overdue)`);
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="text-center">${dateStr}</td>
+          <td class="text-center"><b>${refNo}</b></td>
+          <td class="text-right">₹${Number(pending).toLocaleString('en-IN')}</td>
+          <td class="text-center">${dueStr}</td>
+          <td class="text-center" style="${overdue > 30 ? 'color: #DC2626; font-weight: 700;' : ''}">${overdue}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('totalBox').innerText = `Total: ₹${Number(totalPending).toLocaleString('en-IN')}`;
+
+      // CD Box for Debtors
+      const cdBox = document.getElementById('cdBox');
+      const cdAmount = Math.round(totalTaxable * 0.05 * 100) / 100;
+      const netAfterCd = Math.round((totalPending - cdAmount) * 100) / 100;
+
+      if (type === 'debtor' && openBills.length > 0) {
+        cdBox.style.display = 'block';
+        document.getElementById('cdGrossLine').innerHTML = `• Total Outstanding: <b>₹${Number(totalPending).toLocaleString('en-IN')}</b>`;
+        document.getElementById('cdDeductLine').innerHTML = `• Less 5% CD on Taxable (₹${Number(totalTaxable).toLocaleString('en-IN')}): <b>-₹${Number(cdAmount).toLocaleString('en-IN')}</b>`;
+        document.getElementById('cdNetLine').innerHTML = `👉 TOTAL TO TRANSFER (with CD): ₹${Number(netAfterCd).toLocaleString('en-IN')}`;
+      } else {
+        cdBox.style.display = 'none';
+      }
+
+      // Generate WhatsApp Text
+      let waText = `Hello! This is a reminder from *SKIL LIFESTYLE LLP* that your account balance of *₹${Number(totalPending).toLocaleString('en-IN')}* was overdue as of ${AS_OF_STR}.\n\n`;
+      waText += `📋 *Outstanding Bill-Wise Details:*\n`;
+      waText += waBillLines.join('\n') + '\n';
+      waText += `────────────────────────\n`;
+      waText += `*Total Outstanding (${openBills.length} Bills): ₹${Number(totalPending).toLocaleString('en-IN')}*\n`;
+      if (type === 'debtor') {
+        waText += `*Less: 5% Cash Discount on Taxable (₹${Number(totalTaxable).toLocaleString('en-IN')}): -₹${Number(cdAmount).toLocaleString('en-IN')}*\n`;
+        waText += `👉 *TOTAL TO TRANSFER (with CD): ₹${Number(netAfterCd).toLocaleString('en-IN')}*\n`;
+      }
+      waText += `────────────────────────\n\n`;
+      waText += `*Bank Details:*\n`;
+      waText += `SKIL LIFESTYLE LLP\n`;
+      waText += `Union Bank of India | Rayagada\n`;
+      waText += `A/c: *348621010000129*\n`;
+      waText += `IFSC: *UBIN0934861*\n\n`;
+      waText += `Please process the transfer and share the screenshot so we can issue your CD credit note. Thank you! 🙏\n\n`;
+      waText += `_Sent through SKIL Master App_`;
+
+      document.getElementById('txtWaPreview').value = waText;
+
+      // Wire WhatsApp Action
+      document.getElementById('btnShareWhatsApp').onclick = () => {
+        const url = 'https://wa.me/?text=' + encodeURIComponent(waText);
+        window.open(url, '_blank');
+      };
+
+      document.getElementById('btnCopyWa').onclick = () => {
+        navigator.clipboard.writeText(waText).then(() => {
+          alert('WhatsApp reminder text copied to clipboard!');
+        });
+      };
+    }
+
+    init();
+  </script>
+</body>
+</html>
