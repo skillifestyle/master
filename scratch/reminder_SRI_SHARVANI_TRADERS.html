@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Outstanding Bill wise details - SRI SHARVANI TRADERS</title>
+  <style>
+    @page { size: A4; margin: 15mm; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1E293B;
+      background: #F8FAFC;
+      margin: 0;
+      padding: 24px;
+    }
+    .card {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .greeting {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #334155;
+      margin-bottom: 24px;
+    }
+    .company-title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #0F172A;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .party-block {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .party-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0F172A;
+      margin-bottom: 4px;
+    }
+    .party-address {
+      font-size: 12.5px;
+      color: #475569;
+      line-height: 1.4;
+    }
+    .sub-heading {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0F172A;
+      margin: 20px 0 4px 0;
+    }
+    .as-of-date {
+      text-align: center;
+      font-size: 12.5px;
+      color: #64748B;
+      margin-bottom: 18px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 13px;
+    }
+    th {
+      border: 1px solid #94A3B8;
+      background: #F1F5F9;
+      padding: 10px 12px;
+      text-align: center;
+      font-weight: 700;
+      color: #0F172A;
+    }
+    td {
+      border: 1px solid #CBD5E1;
+      padding: 9px 12px;
+      color: #1E293B;
+    }
+    .text-center { text-align: center; }
+    .text-right { text-align: right; }
+    .total-box {
+      border: 1.5px solid #0F172A;
+      padding: 8px 16px;
+      display: inline-block;
+      font-weight: 800;
+      font-size: 15px;
+      background: #F8FAFC;
+    }
+    .total-container {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .settlement-card {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 13px;
+    }
+    .settlement-card h4 {
+      margin: 0 0 8px 0;
+      color: #166534;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .footer {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #475569;
+      border-top: 1px solid #E2E8F0;
+      padding-top: 16px;
+    }
+    .footer b { color: #0F172A; }
+    .badge-biz {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 11px;
+      color: #64748B;
+    }
+    @media print {
+      body { background: #FFFFFF; padding: 0; }
+      .card { border: none; box-shadow: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="greeting">
+      Hello! This is a reminder that your account balance of <b>₹4,36,117</b> was overdue (&gt;45 days) as of <b>23 Nov 26</b>. (Total pending balance: <b>₹7,58,038</b>). Please find the Receivable for your reference. If you have any queries regarding this account, please contact our office as soon as possible.
+    </div>
+
+    <div class="company-title">SKIL LIFESTYLE LLP</div>
+
+    <div class="party-block">
+      <div class="party-name">SRI SHARVANI TRADERS</div>
+      <div class="party-address">
+        Andhra Pradesh<br>
+        GSTIN: 37ARWPY2407N1ZR 
+      </div>
+    </div>
+
+    <div class="sub-heading">Outstanding Bill wise details</div>
+    <div class="as-of-date">As of Date: <b>23 Nov 26</b></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 18%;">Date</th>
+          <th style="width: 28%;">Ref. No.</th>
+          <th style="width: 22%;">Pending Amount (₹)</th>
+          <th style="width: 18%;">Due on</th>
+          <th style="width: 14%;">Overdue (Days)</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <tr>
+            <td class="text-center">28-09-2026</td>
+            <td class="text-center"><b>SKIL-040</b></td>
+            <td class="text-right">₹3,01,964</td>
+            <td class="text-center">28-10-2026</td>
+            <td class="text-center" style="color: #DC2626; font-weight: 700;">56</td>
+          </tr>
+        
+          <tr>
+            <td class="text-center">28-09-2026</td>
+            <td class="text-center"><b>SKIL-042</b></td>
+            <td class="text-right">₹50,655</td>
+            <td class="text-center">28-10-2026</td>
+            <td class="text-center" style="color: #DC2626; font-weight: 700;">56</td>
+          </tr>
+        
+          <tr>
+            <td class="text-center">29-09-2026</td>
+            <td class="text-center"><b>SKIL-043</b></td>
+            <td class="text-right">₹39,697</td>
+            <td class="text-center">29-10-2026</td>
+            <td class="text-center" style="color: #DC2626; font-weight: 700;">55</td>
+          </tr>
+        
+          <tr>
+            <td class="text-center">29-09-2026</td>
+            <td class="text-center"><b>SKIL-047</b></td>
+            <td class="text-right">₹43,801</td>
+            <td class="text-center">29-10-2026</td>
+            <td class="text-center" style="color: #DC2626; font-weight: 700;">55</td>
+          </tr>
+        
+          <tr>
+            <td class="text-center">31-10-2026</td>
+            <td class="text-center"><b>SKIL-072</b></td>
+            <td class="text-right">₹1,45,300</td>
+            <td class="text-center">30-11-2026</td>
+            <td class="text-center" style="">23</td>
+          </tr>
+        
+          <tr>
+            <td class="text-center">11-11-2026</td>
+            <td class="text-center"><b>SKIL-078</b></td>
+            <td class="text-right">₹59,971</td>
+            <td class="text-center">11-12-2026</td>
+            <td class="text-center" style="">12</td>
+          </tr>
+        
+          <tr>
+            <td class="text-center">13-11-2026</td>
+            <td class="text-center"><b>SKIL-083</b></td>
+            <td class="text-right">₹34,448</td>
+            <td class="text-center">13-12-2026</td>
+            <td class="text-center" style="">10</td>
+          </tr>
+        
+          <tr>
+            <td class="text-center">16-11-2026</td>
+            <td class="text-center"><b>SKIL-084</b></td>
+            <td class="text-right">₹82,202</td>
+            <td class="text-center">16-12-2026</td>
+            <td class="text-center" style="">7</td>
+          </tr>
+        
+      </tbody>
+    </table>
+
+    <div class="total-container">
+      <div class="total-box">
+        Total Pending: ₹7,58,038
+      </div>
+      
+        <div style="font-size: 12.5px; margin-top: 8px; color: #475569;">
+          🔴 Overdue (&gt;45 Days): <b style="color: #DC2626;">₹4,36,117</b> &bull; 
+          🟢 Current (&le;45 Days): <b style="color: #16A34A;">₹3,21,921</b>
+        </div>
+      
+    </div>
+
+    
+    <div class="settlement-card">
+      <h4>Prompt Payment 5% Cash Discount (CD) Option:</h4>
+      <div>• Total Outstanding: <b>₹7,58,038</b></div>
+      <div>• Less 5% CD on Taxable (₹7,21,941.51): <b>-₹36,097.08</b></div>
+      <div style="font-size: 14px; font-weight: 800; color: #15803D; margin-top: 6px;">
+        👉 NET PAYABLE TO TRANSFER: ₹7,21,940.92
+      </div>
+    </div>
+    
+
+    <div class="footer">
+      <b>Regards,</b><br>
+      <b>SKIL LIFESTYLE LLP</b><br>
+      Shop No-7A, D.No.28-10-4, Floor No-3, Vasavi Plaza, Theatre Road, Jagadamba Jn, Visakhapatnam - 530020<br>
+      <b>GSTIN:</b> 37AFZFS2777J1ZV • <b>Mob:</b> 9348343310<br>
+      <b>Bank Details:</b> Union Bank of India | Rayagada • <b>A/c:</b> 348621010000129 • <b>IFSC:</b> UBIN0934861<br>
+      <div class="badge-biz">Generated via SKIL Master Business Suite • Biz Analyst Standard Format</div>
+    </div>
+  </div>
+</body>
+</html>

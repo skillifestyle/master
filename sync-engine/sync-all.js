@@ -4,6 +4,7 @@ const db = require('./database');
 const agingService = require('./aging-service');
 const folderUpdater = require('./folder-updater');
 const { generateAllOpenDebtorPdfs } = require('./generate-pdf-statement');
+const { generateLedgerData } = require('./generate-ledger-data');
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -110,7 +111,10 @@ async function syncAll(options = {}) {
     safeWriteFile(path.join(dir, 'aging.json'), JSON.stringify(agingData, null, 2));
     console.log(`   ✓ Updated: ${path.relative(ROOT, dir)}`);
   });
-  console.log('');
+
+  // 7b. Regenerate Nested Party Ledger Master (ledger-data.json) from live Tally snapshots
+  const ledgerMaster = generateLedgerData({ vouchers, ledgers, writeFiles: true });
+  console.log(`   ✓ Updated ledger-data.json (${ledgerMaster.summary.totalLedgers} ledgers, ${ledgerMaster.summary.totalSalesBillsActive} active sales bills)\n`);
 
   // 8. Generate PDF Statements for all open debtors
   let generatedPdfs = [];

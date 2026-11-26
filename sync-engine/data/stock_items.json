@@ -29170,5 +29170,1484 @@
       "@_NAME": "CB 29507 MAROON 04/09 MRP389/-",
       "@_RESERVEDNAME": ""
     }
+  },
+  "AJ ATL 576/9 04/07 MRP242/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034d",
+    "name": "AJ ATL 576/9 04/07 MRP242/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1041,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034d",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1041",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ ATL 576/9 04/07 MRP242/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ ATL 576/9 04/07 MRP242/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ ATL 578/86 04/07 MRP298/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034e",
+    "name": "AJ ATL 578/86 04/07 MRP298/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1042,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034e",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1042",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ ATL 578/86 04/07 MRP298/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ ATL 578/86 04/07 MRP298/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ ATL 585/86 04/07 MRP195/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034f",
+    "name": "AJ ATL 585/86 04/07 MRP195/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1043,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034f",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1043",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ ATL 585/86 04/07 MRP195/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ ATL 585/86 04/07 MRP195/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ ATL 591/86 04/07 MRP239/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000350",
+    "name": "AJ ATL 591/86 04/07 MRP239/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1044,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000350",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1044",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ ATL 591/86 04/07 MRP239/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ ATL 591/86 04/07 MRP239/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ CEG 1003 B.BLUE 06/09 MRP135/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035f",
+    "name": "AJ CEG 1003 B.BLUE 06/09 MRP135/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1062,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035f",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1062",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ CEG 1003 B.BLUE 06/09 MRP135/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ CEG 1003 B.BLUE 06/09 MRP135/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ CEG 1009 YELLOW 06/10 MRP135/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000360",
+    "name": "AJ CEG 1009 YELLOW 06/10 MRP135/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1063,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000360",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1063",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ CEG 1009 YELLOW 06/10 MRP135/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ CEG 1009 YELLOW 06/10 MRP135/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ CKL 203/86 01/04 MRP256/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000351",
+    "name": "AJ CKL 203/86 01/04 MRP256/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1045,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000351",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1045",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ CKL 203/86 01/04 MRP256/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ CKL 203/86 01/04 MRP256/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ CUSHION 024 BLB 02/05 MRP137/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035d",
+    "name": "AJ CUSHION 024 BLB 02/05 MRP137/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1061,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035d",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1061",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ CUSHION 024 BLB 02/05 MRP137/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ CUSHION 024 BLB 02/05 MRP137/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ CUSHION 024 BLB 06/10 MRP146/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035b",
+    "name": "AJ CUSHION 024 BLB 06/10 MRP146/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1056,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035b",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1056",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ CUSHION 024 BLB 06/10 MRP146/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ CUSHION 024 BLB 06/10 MRP146/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ FITNESS PLUS 105 BLACK 06/09 MRP159/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034a",
+    "name": "AJ FITNESS PLUS 105 BLACK 06/09 MRP159/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1038,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034a",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1038",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ FITNESS PLUS 105 BLACK 06/09 MRP159/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ FITNESS PLUS 105 BLACK 06/09 MRP159/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ FITNESS PLUS N.BLUE 06/10 MRP159/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000349",
+    "name": "AJ FITNESS PLUS N.BLUE 06/10 MRP159/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1037,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000349",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1037",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ FITNESS PLUS N.BLUE 06/10 MRP159/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ FITNESS PLUS N.BLUE 06/10 MRP159/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ LOOK 11 B.GREEN 06/10 MRP179/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000361",
+    "name": "AJ LOOK 11 B.GREEN 06/10 MRP179/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1066,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000361",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1066",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ LOOK 11 B.GREEN 06/10 MRP179/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ LOOK 11 B.GREEN 06/10 MRP179/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ NANO 07 P.BLUE 09/01 MRP129/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000362",
+    "name": "AJ NANO 07 P.BLUE 09/01 MRP129/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1065,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000362",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1065",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ NANO 07 P.BLUE 09/01 MRP129/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ NANO 07 P.BLUE 09/01 MRP129/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUG 8482/1 06/09 MRP309.75/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034b",
+    "name": "AJ PUG 8482/1 06/09 MRP309.75/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1039,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034b",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1039",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUG 8482/1 06/09 MRP309.75/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUG 8482/1 06/09 MRP309.75/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUG 8511/1 05/09 MRP299/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000363",
+    "name": "AJ PUG 8511/1 05/09 MRP299/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1067,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000363",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1067",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUG 8511/1 05/09 MRP299/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUG 8511/1 05/09 MRP299/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUG 8518/73 05/09 MRP296/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000364",
+    "name": "AJ PUG 8518/73 05/09 MRP296/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1069,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000364",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1069",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUG 8518/73 05/09 MRP296/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUG 8518/73 05/09 MRP296/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUG 8527/9 06/10 MRP275/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000365",
+    "name": "AJ PUG 8527/9 06/10 MRP275/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1070,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000365",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1070",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUG 8527/9 06/10 MRP275/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUG 8527/9 06/10 MRP275/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUG 8529/1 06/10 MRP275/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000366",
+    "name": "AJ PUG 8529/1 06/10 MRP275/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1071,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000366",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1071",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUG 8529/1 06/10 MRP275/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUG 8529/1 06/10 MRP275/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUG 8545/73 06/10 MRP289/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000367",
+    "name": "AJ PUG 8545/73 06/10 MRP289/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1072,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000367",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1072",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUG 8545/73 06/10 MRP289/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUG 8545/73 06/10 MRP289/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUL 9295/3 05/08 MRP274/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000352",
+    "name": "AJ PUL 9295/3 05/08 MRP274/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1046,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000352",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1046",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUL 9295/3 05/08 MRP274/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUL 9295/3 05/08 MRP274/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUL 9295/73 05/08 MRP274/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000353",
+    "name": "AJ PUL 9295/73 05/08 MRP274/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1049,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000353",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1049",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUL 9295/73 05/08 MRP274/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUL 9295/73 05/08 MRP274/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUL 9295/83 05/08 MRP274/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000354",
+    "name": "AJ PUL 9295/83 05/08 MRP274/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1048,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000354",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1048",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUL 9295/83 05/08 MRP274/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUL 9295/83 05/08 MRP274/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUL 9368/2 05/08 MRP279/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000355",
+    "name": "AJ PUL 9368/2 05/08 MRP279/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1050,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000355",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1050",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUL 9368/2 05/08 MRP279/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUL 9368/2 05/08 MRP279/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUL 9368/73 05/08 MRP279/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000356",
+    "name": "AJ PUL 9368/73 05/08 MRP279/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1051,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000356",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1051",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUL 9368/73 05/08 MRP279/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUL 9368/73 05/08 MRP279/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PUL 9372/73 05/08 MRP345/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000357",
+    "name": "AJ PUL 9372/73 05/08 MRP345/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1052,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000357",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1052",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PUL 9372/73 05/08 MRP345/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PUL 9372/73 05/08 MRP345/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ PULC 1036/80 01/03 MRP265/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000358",
+    "name": "AJ PULC 1036/80 01/03 MRP265/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1053,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000358",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1053",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ PULC 1036/80 01/03 MRP265/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ PULC 1036/80 01/03 MRP265/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ TOPZ 101 BLUE 02/05 MRP139/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000359",
+    "name": "AJ TOPZ 101 BLUE 02/05 MRP139/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1054,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000359",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1054",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ TOPZ 101 BLUE 02/05 MRP139/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ TOPZ 101 BLUE 02/05 MRP139/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ TOPZ 101 BLUE 06/10 MRP149/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034c",
+    "name": "AJ TOPZ 101 BLUE 06/10 MRP149/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1040,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000034c",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1040",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ TOPZ 101 BLUE 06/10 MRP149/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ TOPZ 101 BLUE 06/10 MRP149/-",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  "AJ TOTO SOFT/44 DP.CYAN 09/01 MRP121/-": {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035a",
+    "name": "AJ TOTO SOFT/44 DP.CYAN 09/01 MRP121/-",
+    "stockGroup": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+    "baseUnit": "Pairs",
+    "additionalUnit": "Box",
+    "openingBalance": "",
+    "openingValue": 0,
+    "alterId": 1055,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-0000035a",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "AJANTA SHOES (INDIA) PRIVATE LIMITED",
+        "@_TYPE": "String"
+      },
+      "BASEUNITS": {
+        "#text": "Pairs",
+        "@_TYPE": "String"
+      },
+      "ADDITIONALUNITS": {
+        "#text": "Box",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1055",
+        "@_TYPE": "Number"
+      },
+      "OPENINGBALANCE": {
+        "@_TYPE": "Quantity"
+      },
+      "OPENINGVALUE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "AJ TOTO SOFT/44 DP.CYAN 09/01 MRP121/-",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "@_NAME": "AJ TOTO SOFT/44 DP.CYAN 09/01 MRP121/-",
+      "@_RESERVEDNAME": ""
+    }
   }
 }

@@ -1,14 +1,14 @@
 {
   "tallyOnline": true,
   "activeCompany": "SKIL LIFESTYLE LLP",
-  "lastSyncTimestamp": "2026-11-23T15:23:09.200Z",
+  "lastSyncTimestamp": "2026-11-26T13:28:31.296Z",
   "counts": {
-    "vouchers": 268,
-    "ledgers": 46,
-    "stockItems": 566
+    "vouchers": 282,
+    "ledgers": 47,
+    "stockItems": 595
   },
   "outstandings": {
-    "debtorsTotal": 3125344,
-    "creditorsTotal": 2987289.77
+    "debtorsTotal": 3494503,
+    "creditorsTotal": 3412131.77
   }
 }

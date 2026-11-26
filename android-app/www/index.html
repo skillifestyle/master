@@ -2300,10 +2300,10 @@
       <!-- ============================================== -->
       <section class="view-panel" id="view-ledger-book">
         <div class="card-white">
-          <div class="section-header-row">
+          <div class="section-header-row" style="align-items: flex-start; gap: 14px; flex-wrap: wrap;">
             <div>
-              <h2 class="section-title">Ledger Statement Explorer</h2>
-              <div class="section-subtitle">Chronological accounting statement and running balance for any Tally ledger</div>
+              <h2 class="section-title">Ledger Explorer &amp; Point-in-Time Download</h2>
+              <div class="section-subtitle">Select any party or ledger account, choose any <strong>As of Date</strong> or range, inspect nested bills &amp; aging, and download anytime.</div>
             </div>
 
             <!-- Custom Styled Searchable Dropdown -->
@@ -2319,7 +2319,7 @@
               <div class="custom-dropdown-menu" id="ledgerDropdownMenu">
                 <div class="dropdown-search-box">
                   <i data-lucide="search" style="width: 14px; height: 14px; color: #94A3B8;"></i>
-                  <input type="text" id="ledgerSearchInput" placeholder="Type to filter ledger..." autocomplete="off">
+                  <input type="text" id="ledgerSearchInput" placeholder="Search party, supplier, bank, GST..." autocomplete="off">
                 </div>
                 <div class="dropdown-items-list" id="ledgerItemsList">
                   <!-- Dynamically populated options -->
@@ -2333,25 +2333,111 @@
             </select>
           </div>
 
+          <!-- Point-in-Time Controls & Download Toolbar -->
+          <div style="background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 12px; padding: 14px 16px; margin: 14px 0 18px 0; display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+              <div style="display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap;">
+                <div>
+                  <label for="ledgerFromDate" style="display: block; font-size: 10.5px; font-weight: 800; color: #475569; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px;">From Date (Optional)</label>
+                  <input type="date" id="ledgerFromDate" style="padding: 7px 10px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-family: inherit; font-size: 12.5px; font-weight: 600; color: #0F172A; background: #FFFFFF;">
+                </div>
+                <div>
+                  <label for="ledgerAsOfDate" style="display: block; font-size: 10.5px; font-weight: 800; color: #0F172A; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px;">As of / To Date</label>
+                  <input type="date" id="ledgerAsOfDate" style="padding: 7px 10px; border: 1.5px solid #1E293B; border-radius: 8px; font-family: inherit; font-size: 12.5px; font-weight: 700; color: #0F172A; background: #FFFFFF;">
+                </div>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                  <button type="button" class="segment-btn" id="btnLedgerPresetToday" onclick="setLedgerDatePreset('today')" style="padding: 7px 10px; font-size: 11.5px;">Today / Latest</button>
+                  <button type="button" class="segment-btn" onclick="setLedgerDatePreset('oct31')" style="padding: 7px 10px; font-size: 11.5px;">As of 31 Oct</button>
+                  <button type="button" class="segment-btn" onclick="setLedgerDatePreset('sep30')" style="padding: 7px 10px; font-size: 11.5px;">As of 30 Sep</button>
+                  <button type="button" class="segment-btn" onclick="setLedgerDatePreset('aug31')" style="padding: 7px 10px; font-size: 11.5px;">As of 31 Aug</button>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" onclick="downloadPartyLedgerPdf()" style="background: #0F172A; color: #FFFFFF; border: none; padding: 8px 13px; border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                  <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                  <span>PDF / Print</span>
+                </button>
+                <button type="button" onclick="downloadPartyLedgerHtml()" style="background: #FFFFFF; color: #0F172A; border: 1.5px solid #CBD5E1; padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                  <i data-lucide="code" style="width: 14px; height: 14px;"></i>
+                  <span>HTML</span>
+                </button>
+                <button type="button" onclick="downloadPartyLedgerCsv()" style="background: #FFFFFF; color: #0F172A; border: 1.5px solid #CBD5E1; padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                  <i data-lucide="sheet" style="width: 14px; height: 14px;"></i>
+                  <span>CSV (Excel)</span>
+                </button>
+                <button type="button" onclick="downloadPartyLedgerJson()" style="background: #EFF6FF; color: #0369A1; border: 1.5px solid #BAE6FD; padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                  <i data-lucide="braces" style="width: 14px; height: 14px;"></i>
+                  <span>Party JSON</span>
+                </button>
+                <button type="button" onclick="downloadAllLedgerDataJson()" style="background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1; padding: 8px 11px; border-radius: 8px; font-weight: 700; font-size: 11.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;" title="Download full ledger-data.json containing all 47 ledgers and nested bills">
+                  <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+                  <span>All Ledgers JSON</span>
+                </button>
+              </div>
+            </div>
+
+            <div id="ledgerPartyMetaStrip" style="display: none; font-size: 12px; color: #475569; border-top: 1px dashed #CBD5E1; padding-top: 8px; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;"></div>
+          </div>
+
           <div class="modal-stint-summary-cards" style="margin-bottom: 20px;">
             <div class="modal-mini-card">
+              <div class="modal-mini-label">Opening Balance</div>
+              <div class="modal-mini-val" id="ledgerOpeningBalance">₹0</div>
+            </div>
+            <div class="modal-mini-card">
               <div class="modal-mini-label">Total Debits</div>
-              <div class="modal-mini-val" id="ledgerTotalDebits">₹0.00</div>
+              <div class="modal-mini-val" id="ledgerTotalDebits">₹0</div>
             </div>
             <div class="modal-mini-card">
               <div class="modal-mini-label">Total Credits</div>
-              <div class="modal-mini-val" id="ledgerTotalCredits">₹0.00</div>
+              <div class="modal-mini-val" id="ledgerTotalCredits">₹0</div>
+            </div>
+            <div class="modal-mini-card" style="background: #0F172A; border-color: #1E293B;">
+              <div class="modal-mini-label" style="color: #94A3B8;">Closing Balance</div>
+              <div class="modal-mini-val" id="ledgerClosingBalance" style="color: #FFFFFF;">₹0</div>
             </div>
             <div class="modal-mini-card">
-              <div class="modal-mini-label">Closing Balance</div>
-              <div class="modal-mini-val" id="ledgerClosingBalance">₹0.00</div>
-            </div>
-            <div class="modal-mini-card">
-              <div class="modal-mini-label">Total Vouchers</div>
+              <div class="modal-mini-label">Vouchers / Bills</div>
               <div class="modal-mini-val" id="ledgerVoucherCount">0</div>
+            </div>
+            <div class="modal-mini-card">
+              <div class="modal-mini-label">Oldest Open Aging</div>
+              <div class="modal-mini-val" id="ledgerOldestAging">—</div>
             </div>
           </div>
 
+          <!-- Nested Bill-by-Bill Schedule (for Debtors & Creditors) -->
+          <div id="ledgerBillsSection" style="display: none; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <h3 style="font-size: 14px; font-weight: 800; color: #0F172A; margin: 0;">Bill-by-Bill Schedule &amp; Aging from Billing Date</h3>
+                <div style="font-size: 11.5px; color: #64748B;" id="ledgerBillsSubtitle">Computed relative to selected As of Date</div>
+              </div>
+              <span class="badge-pill badge-neutral" id="ledgerCdSummaryBadge" style="font-size: 11px;"></span>
+            </div>
+            <div class="table-responsive">
+              <table class="biz-table">
+                <thead>
+                  <tr>
+                    <th>BILLING DATE</th>
+                    <th>BILL NO.</th>
+                    <th>SUPPLIER REF</th>
+                    <th style="text-align: right;">CTN</th>
+                    <th style="text-align: right;">GROSS (₹)</th>
+                    <th style="text-align: right;">5% CD</th>
+                    <th style="text-align: right;">SETTLED (₹)</th>
+                    <th style="text-align: right;">UNPAID (₹)</th>
+                    <th style="text-align: center;">AGING (DAYS)</th>
+                    <th style="text-align: center;">STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="ledgerBillsTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <h3 style="font-size: 14px; font-weight: 800; color: #0F172A; margin: 0 0 10px 0;">Chronological Ledger Statement</h3>
           <div class="table-responsive">
             <table class="biz-table">
               <thead>

@@ -201,6 +201,25 @@ app.get('/api/data/aging', (req, res) => {
   }
 });
 
+// 11a. Nested Party & Ledger Master Dataset (ledger-data.json)
+app.get('/api/data/ledger-data', (req, res) => {
+  try {
+    const jsonPath = path.join(__dirname, 'data', 'ledger-data.json');
+    if (fs.existsSync(jsonPath)) {
+      const payload = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+      const partyQuery = (req.query.party || '').trim().toLowerCase();
+      if (partyQuery && Array.isArray(payload.parties)) {
+        const match = payload.parties.find(p => (p.partyName || '').toLowerCase() === partyQuery);
+        return match ? res.json(match) : res.status(404).json({ error: 'Party ledger not found' });
+      }
+      return res.json(payload);
+    }
+    res.status(404).json({ error: 'ledger-data.json not generated yet' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // 11b. Inventory Movement & Stock Valuation Report
 app.get('/api/inventory/report', (req, res) => {
   try {

@@ -88,6 +88,23 @@ const INVOICE_PDF_MAP = {
   ajanta_80: 'documents/ajanta/080 - 1900426153 - Sri Laxmi Narasimha Nellore - 12-11-26.pdf',
   ajanta_81: 'documents/ajanta/081 - 1900426275 - Sri Laxmi Narasimha Nellore - 13-11-26.pdf',
   ajanta_82: 'documents/ajanta/082 - 1900426475 - Sharvani SKLM - 13-11-26.pdf',
+  ajanta_83: 'documents/ajanta/083 - 1900427149 - Sharvani VZAG - 16-11-26.pdf',
+  ajanta_84: 'documents/ajanta/084 - 1900427151 - Sri Laxmi Narasimha Nellore - 16-11-26.pdf',
+  ajanta_85: 'documents/ajanta/085 - 1900427150 - Jyothi Anakapalli - 16-11-26.pdf',
+  ajanta_87: 'documents/ajanta/087 - 1900428077 - KGN PVM - 19-11-26.pdf',
+  ajanta_88: 'documents/ajanta/088 - 1900428078 - SF SKLM - 19-11-26.pdf',
+  ajanta_89: 'documents/ajanta/089 - 1900428079 - SBE RGDA - 19-11-26.pdf',
+  ajanta_91: 'documents/ajanta/091 - 1900428134 - SBE RGDA - 19-11-26.pdf',
+  ajanta_92: 'documents/ajanta/092 - 1900428206 - Delight VZM - 19-11-26.pdf',
+  ajanta_93: 'documents/ajanta/093 - 1900428135 - Delight VZM - 19-11-26.pdf',
+  ajanta_94: 'documents/ajanta/094 - 1900428080 - Delight VZM - 19-11-26.pdf',
+  ajanta_95: 'documents/ajanta/095 - 1900428205 - SBE RGDA - 19-11-26.pdf',
+  ajanta_96: 'documents/ajanta/096 - 1900428997 - SVF Sompeta - 23-11-26.pdf',
+  ajanta_97: 'documents/ajanta/097 - 1900429137 - SVF Sompeta - 23-11-26.pdf',
+  ajanta_98: 'documents/ajanta/098 - 1900429136 - SF SKLM - 23-11-26.pdf',
+  ajanta_99: 'documents/ajanta/099 - 1900429263 - SVF Sompeta - 23-11-26.pdf',
+  ajanta_100: 'documents/ajanta/100 - 1900429266 - Jyothi Anakapalli - 23-11-26.pdf',
+  ajanta_101: 'documents/ajanta/101 - 1900429264 - Delight VZM - 23-11-26.pdf',
   xpania_23: 'documents/xpania/023 - XPL-2041-26-27 - Sushila JSG - 09-09-26.pdf',
   xpania_35: 'documents/xpania/035 - XPL-2140-26-27 - Mahavir DNKL - 19-09-26.pdf',
   xpania_54: 'documents/xpania/054 - XPL-2327-26-27 - Mahavir DNKL - 08-10-26.pdf',
@@ -95,7 +112,8 @@ const INVOICE_PDF_MAP = {
   xpania_56: 'documents/xpania/056 - XPL-2366-26-27 - Rajan Jajpur - 10-10-26.pdf',
   xpania_57: 'documents/xpania/057 - XPL-2369-26-27 - Shree Aditya VZM - 12-10-26.pdf',
   cubix_58: 'documents/cubix/058 - 2026-27-2155 - Famous VZM - 21-10-26.pdf',
-  cubix_77: 'documents/cubix/077 - 2026-27-2383 - SF SKLM - 09-11-26.pdf'
+  cubix_77: 'documents/cubix/077 - 2026-27-2383 - SF SKLM - 09-11-26.pdf',
+  cubix_90: 'documents/cubix/090 - 2026-27-2459 - Famous VZM - 19-11-26.pdf'
 };
 
 window.openInvoicePdf = function(vchNo, supplier = '') {
@@ -626,7 +644,7 @@ async function refreshAllData() {
     const [
       statusRes, overviewRes, gridRes, agingRes, invRes,
       schemesRes, auditRes, guideRes, foldersRes, rawVchRes,
-      ledgersRes, daybookRes, stmt45Res
+      ledgersRes, daybookRes, stmt45Res, ledgerDataRes
     ] = await Promise.all([
       smartFetch('/api/status', 'status.json'),
       smartFetch('/api/tracking/overview', 'overview.json'),
@@ -640,7 +658,8 @@ async function refreshAllData() {
       smartFetch('/api/data/vouchers?limit=500', 'vouchers.json'),
       smartFetch('/api/data/ledgers?limit=500', 'ledgers.json'),
       smartFetch('/api/daybook/notes', 'daybook-notes.json'),
-      smartFetch('/api/data/statement-45d', 'statement-45d.json')
+      smartFetch('/api/data/statement-45d', 'statement-45d.json'),
+      smartFetch('/api/data/ledger-data', 'ledger-data.json')
     ]);
 
     state.status = statusRes;
@@ -660,6 +679,7 @@ async function refreshAllData() {
       : (ledgersRes?.items ? ledgersRes.items : Object.values(ledgersRes || {}));
     state.daybookNotes = Array.isArray(daybookRes) ? daybookRes : [];
     state.statement45 = stmt45Res;
+    state.ledgerData = ledgerDataRes || null;
 
     // Update Top Header Information
     updateTopBarInfo();
@@ -1230,13 +1250,19 @@ function renderPartiesView() {
                       ? '<span class="badge-pill badge-warning" style="font-size: 10px;">Aging 31-45d</span>'
                       : '<span class="badge-pill badge-danger" style="font-size: 10px;">Critical &gt;45d</span>'))}
               </td>
-              <td style="text-align: center;">
-                ${isDebtor && !isCleared ? `
-                  <button class="btn-download-sm" style="background: #22C55E; color: #FFFFFF; border: none; padding: 5px 10px; font-weight: 700; font-size: 11.5px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" onclick="openCustomerSettlementModal('${p.partyName.replace(/'/g, "\\'")}')">
-                    <i data-lucide="message-circle" style="width: 12px; height: 12px;"></i>
-                    <span>Settle</span>
+              <td style="text-align: center; white-space: nowrap;">
+                <div style="display: inline-flex; gap: 5px; align-items: center; justify-content: center;">
+                  ${isDebtor && !isCleared ? `
+                    <button class="btn-download-sm" style="background: #22C55E; color: #FFFFFF; border: none; padding: 5px 9px; font-weight: 700; font-size: 11px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" onclick="openCustomerSettlementModal('${p.partyName.replace(/'/g, "\\'")}')">
+                      <i data-lucide="message-circle" style="width: 12px; height: 12px;"></i>
+                      <span>Settle</span>
+                    </button>
+                  ` : ''}
+                  <button class="btn-download-sm" style="background: #0F172A; color: #FFFFFF; border: none; padding: 5px 9px; font-weight: 700; font-size: 11px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" onclick="openPartyLedgerInBook('${p.partyName.replace(/'/g, "\\'")}')" title="View & Download Point-in-Time Ledger">
+                    <i data-lucide="download" style="width: 12px; height: 12px;"></i>
+                    <span>Ledger</span>
                   </button>
-                ` : `<span style="font-size: 11px; color: #94A3B8;">—</span>`}
+                </div>
               </td>
             </tr>
           `;
@@ -1254,13 +1280,19 @@ function renderPartiesView() {
               <td style="text-align: right; font-weight: 700; color: ${d31_45 > 0 ? '#D97706' : '#94A3B8'};">${d31_45 > 0 ? formatINR(d31_45) : '—'}</td>
               <td style="text-align: right; font-weight: 700; color: ${d46_60 > 0 ? '#EA580C' : '#94A3B8'};">${d46_60 > 0 ? formatINR(d46_60) : '—'}</td>
               <td style="text-align: right; font-weight: 700; color: ${o60 > 0 ? '#DC2626' : '#94A3B8'};">${o60 > 0 ? formatINR(o60) : '—'}</td>
-              <td style="text-align: center;">
-                ${isDebtor && !isCleared ? `
-                  <button class="btn-download-sm" style="background: #22C55E; color: #FFFFFF; border: none; padding: 5px 10px; font-weight: 700; font-size: 11.5px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" onclick="openCustomerSettlementModal('${p.partyName.replace(/'/g, "\\'")}')">
-                    <i data-lucide="message-circle" style="width: 12px; height: 12px;"></i>
-                    <span>Settle</span>
+              <td style="text-align: center; white-space: nowrap;">
+                <div style="display: inline-flex; gap: 5px; align-items: center; justify-content: center;">
+                  ${isDebtor && !isCleared ? `
+                    <button class="btn-download-sm" style="background: #22C55E; color: #FFFFFF; border: none; padding: 5px 9px; font-weight: 700; font-size: 11px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" onclick="openCustomerSettlementModal('${p.partyName.replace(/'/g, "\\'")}')">
+                      <i data-lucide="message-circle" style="width: 12px; height: 12px;"></i>
+                      <span>Settle</span>
+                    </button>
+                  ` : ''}
+                  <button class="btn-download-sm" style="background: #0F172A; color: #FFFFFF; border: none; padding: 5px 9px; font-weight: 700; font-size: 11px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" onclick="openPartyLedgerInBook('${p.partyName.replace(/'/g, "\\'")}')" title="View & Download Point-in-Time Ledger">
+                    <i data-lucide="download" style="width: 12px; height: 12px;"></i>
+                    <span>Ledger</span>
                   </button>
-                ` : `<span style="font-size: 11px; color: #94A3B8;">—</span>`}
+                </div>
               </td>
             </tr>
           `;
@@ -1329,14 +1361,18 @@ function renderPartiesView() {
               </div>
             `}
 
-            ${isDebtor && !isCleared ? `
-              <div style="margin-top: 8px;">
-                <button class="btn-download-sm" style="width: 100%; background: #22C55E; color: #FFFFFF; border: none; padding: 8px 12px; font-weight: 700; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px;" onclick="openCustomerSettlementModal('${p.partyName.replace(/'/g, "\\'")}')">
+            <div style="margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap;">
+              ${isDebtor && !isCleared ? `
+                <button class="btn-download-sm" style="flex: 1 1 auto; background: #22C55E; color: #FFFFFF; border: none; padding: 8px 10px; font-weight: 700; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 12px;" onclick="openCustomerSettlementModal('${p.partyName.replace(/'/g, "\\'")}')">
                   <i data-lucide="message-circle" style="width: 13px; height: 13px;"></i>
-                  <span>WhatsApp Settlement &amp; Statement</span>
+                  <span>Settle</span>
                 </button>
-              </div>
-            ` : ''}
+              ` : ''}
+              <button class="btn-download-sm" style="flex: 1 1 auto; background: #0F172A; color: #FFFFFF; border: none; padding: 8px 10px; font-weight: 700; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 12px;" onclick="openPartyLedgerInBook('${p.partyName.replace(/'/g, "\\'")}')">
+                <i data-lucide="download" style="width: 13px; height: 13px;"></i>
+                <span>Ledger &amp; PDF</span>
+              </button>
+            </div>
           </div>
         `;
       }).join('');
@@ -2244,8 +2280,259 @@ function renderLinemanView() {
 }
 
 // ==========================================================================
-// 11. LEDGER BOOK VIEW
+// 11. LEDGER BOOK VIEW & POINT-IN-TIME DOWNLOAD ENGINE
 // ==========================================================================
+
+function diffDaysIso(endIso, startIso) {
+  if (!endIso || !startIso) return 0;
+  const [y1, m1, d1] = endIso.slice(0, 10).split('-').map(Number);
+  const [y2, m2, d2] = startIso.slice(0, 10).split('-').map(Number);
+  return Math.max(0, Math.round((Date.UTC(y1, m1 - 1, d1) - Date.UTC(y2, m2 - 1, d2)) / 86400000));
+}
+
+function fmtDmyDash(iso) {
+  if (!iso || iso.length < 10) return iso || '—';
+  return `${iso.slice(8, 10)}-${iso.slice(5, 7)}-${iso.slice(0, 4)}`;
+}
+
+function triggerBlobDownload(content, mimeType, filename) {
+  const blob = new Blob([content], { type: mimeType });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1200);
+}
+
+function csvEscapeCell(val) {
+  const s = String(val === null || val === undefined ? '' : val);
+  return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+function safeFilePart(name) {
+  return String(name || 'Ledger').replace(/[^a-zA-Z0-9_-]+/g, '_').replace(/^_+|_+$/g, '');
+}
+
+async function ensureLedgerDataLoaded() {
+  if (state.ledgerData && Array.isArray(state.ledgerData.parties)) return state.ledgerData;
+  const loaded = await smartFetch('/api/data/ledger-data', 'ledger-data.json');
+  if (loaded && Array.isArray(loaded.parties)) {
+    state.ledgerData = loaded;
+  }
+  return state.ledgerData;
+}
+
+function getFallbackPartyRecord(ledgerName) {
+  const targetLower = String(ledgerName || '').trim().toLowerCase();
+  const ledgerMeta = (state.ledgers || []).find(l => (l.name || '').trim().toLowerCase() === targetLower) || {};
+  const vchs = (state.rawVouchers || []).filter(v =>
+    (v.partyName && v.partyName.trim().toLowerCase() === targetLower) ||
+    (v.ledgerEntries || []).some(le => le.ledgerName && le.ledgerName.trim().toLowerCase() === targetLower)
+  ).sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+
+  const openRaw = Number(ledgerMeta.openingBalance || 0);
+  let runSigned = openRaw < 0 ? Math.abs(openRaw) : -openRaw;
+  const transactions = vchs.map(v => {
+    const entries = (v.ledgerEntries || []).filter(le => le.ledgerName && le.ledgerName.trim().toLowerCase() === targetLower);
+    let debit = 0;
+    let credit = 0;
+    if (entries.length > 0) {
+      entries.forEach(le => {
+        const val = le.rawAmount !== undefined ? Number(le.rawAmount) : Number(le.amount || 0);
+        if (val < 0) debit += Math.abs(val);
+        else if (val > 0) credit += val;
+      });
+    } else {
+      const amt = Math.abs(Number(v.amount || 0));
+      if (v.voucherType === 'Sales' || v.voucherType === 'Payment' || v.voucherType === 'Debit Note') debit = amt;
+      else credit = amt;
+    }
+    const iso = String(v.date || '').length === 8
+      ? `${v.date.slice(0, 4)}-${v.date.slice(4, 6)}-${v.date.slice(6, 8)}`
+      : String(v.date || '').slice(0, 10);
+    runSigned += (debit - credit);
+    return {
+      date: iso,
+      billingDate: iso,
+      formattedDate: fmtDmyDash(iso),
+      voucherType: v.voucherType,
+      voucherNumber: v.voucherNumber || '',
+      reference: v.reference || '',
+      narration: v.narration || '',
+      debit: Math.round(debit * 100) / 100,
+      credit: Math.round(credit * 100) / 100,
+      runningSigned: Math.round(runSigned * 100) / 100
+    };
+  });
+
+  return {
+    partyName: ledgerMeta.name || ledgerName,
+    group: ledgerMeta.parent || 'Ledger',
+    category: (ledgerMeta.parent || '').toLowerCase().includes('debtor') ? 'debtor'
+      : ((ledgerMeta.parent || '').toLowerCase().includes('creditor') ? 'creditor' : 'other'),
+    city: '',
+    state: ledgerMeta.state || '',
+    address: ledgerMeta.address || '',
+    gstin: ledgerMeta.gstin || '',
+    mobile: ledgerMeta.mobile || '',
+    openingBalance: openRaw,
+    bills: [],
+    settlements: [],
+    transactions
+  };
+}
+
+function computePointInTimeLedger(ledgerName, asOfIso, fromIso = '') {
+  const targetLower = String(ledgerName || '').trim().toLowerCase();
+  const baseParty = (state.ledgerData?.parties || []).find(p => (p.partyName || '').trim().toLowerCase() === targetLower)
+    || getFallbackPartyRecord(ledgerName);
+
+  const effAsOf = asOfIso || state.ledgerData?.asOfDate || getLocalIsoDate();
+  const effFrom = fromIso && fromIso <= effAsOf ? fromIso : '';
+
+  const openRaw = Number(baseParty.openingBalance || 0); // <0 = Dr, >0 = Cr in Tally JSON
+  let openingSigned = Math.round((openRaw < 0 ? Math.abs(openRaw) : -openRaw) * 100) / 100;
+
+  const allUpTo = (baseParty.transactions || []).filter(t => !t.date || t.date <= effAsOf);
+  const inRange = [];
+
+  for (const t of allUpTo) {
+    const debit = Number(t.debit || 0);
+    const credit = Number(t.credit || 0);
+    if (effFrom && t.date < effFrom) {
+      openingSigned = Math.round((openingSigned + debit - credit) * 100) / 100;
+    } else {
+      inRange.push(t);
+    }
+  }
+
+  let runningSigned = openingSigned;
+  let totalDebits = 0;
+  let totalCredits = 0;
+
+  const transactions = inRange.map(t => {
+    const debit = Math.round(Number(t.debit || 0) * 100) / 100;
+    const credit = Math.round(Number(t.credit || 0) * 100) / 100;
+    totalDebits = Math.round((totalDebits + debit) * 100) / 100;
+    totalCredits = Math.round((totalCredits + credit) * 100) / 100;
+    runningSigned = Math.round((runningSigned + debit - credit) * 100) / 100;
+    return {
+      ...t,
+      debit,
+      credit,
+      runningSigned,
+      runningBalance: Math.round(Math.abs(runningSigned) * 100) / 100,
+      runningBalanceType: runningSigned > 0.005 ? 'Dr' : (runningSigned < -0.005 ? 'Cr' : 'Nil')
+    };
+  });
+
+  // Recompute point-in-time nested bills & FIFO aging as of effAsOf
+  const isDebtor = baseParty.category === 'debtor';
+  const isCreditor = baseParty.category === 'creditor';
+  const rawBills = (baseParty.bills || []).filter(b => (b.billingDate || b.tallyDate) <= effAsOf && (!b.tallyDate || b.tallyDate <= effAsOf));
+  const rawSettlements = (baseParty.settlements || []).filter(s => s.date <= effAsOf);
+
+  const bills = rawBills.map(b => {
+    const bDate = b.billingDate || b.tallyDate;
+    const agingDays = diffDaysIso(effAsOf, bDate);
+    const cancelledAsOf = b.status === 'CANCELLED' && effAsOf >= '2026-10-31';
+    let cdStatus = b.cdStatus || 'N/A';
+    let cdAmount = Number(b.cdAmount || 0);
+    if (isDebtor) {
+      if (cancelledAsOf) {
+        cdStatus = 'CANCELLED';
+        cdAmount = 0;
+      } else if (b.cdStatus === 'GIVEN' && b.cdCreditNoteDate && b.cdCreditNoteDate <= effAsOf) {
+        cdStatus = 'GIVEN';
+      } else {
+        cdStatus = 'PENDING';
+        cdAmount = Math.round((b.taxableAmount || 0) * 0.05);
+      }
+    }
+    return {
+      ...b,
+      agingDaysFromBilling: agingDays,
+      daysOverdue30d: Math.max(0, agingDays - 30),
+      daysOverdue45d: Math.max(0, agingDays - 45),
+      cdStatus,
+      cdAmount,
+      netAfterCd: Math.round((b.grossAmount - cdAmount) * 100) / 100,
+      settledAmount: cancelledAsOf ? b.grossAmount : 0,
+      unpaidAmount: cancelledAsOf ? 0 : b.grossAmount,
+      status: cancelledAsOf ? 'CANCELLED' : 'OPEN',
+      inSelectedPeriod: !effFrom || bDate >= effFrom
+    };
+  });
+
+  if (isDebtor || isCreditor) {
+    let fifoPool = 0;
+    for (const s of rawSettlements) {
+      if (isDebtor && baseParty.partyName === 'DELIGHT FOOT WEAR' && s.voucherType === 'Credit Note' && s.voucherNumber === '8') {
+        continue;
+      }
+      fifoPool = Math.round((fifoPool + Number(s.amount || 0)) * 100) / 100;
+    }
+    const chron = [...bills]
+      .filter(b => b.status !== 'CANCELLED')
+      .sort((a, b) => (a.billingDate || '').localeCompare(b.billingDate || '') || String(a.voucherNumber || '').localeCompare(String(b.voucherNumber || ''), undefined, { numeric: true }));
+
+    for (const b of chron) {
+      if (fifoPool <= 0.005) break;
+      const alloc = Math.round(Math.min(b.grossAmount, fifoPool) * 100) / 100;
+      b.settledAmount = alloc;
+      b.unpaidAmount = Math.round((b.grossAmount - alloc) * 100) / 100;
+      fifoPool = Math.round((fifoPool - alloc) * 100) / 100;
+      b.status = b.unpaidAmount <= 0.5 ? 'PAID' : (alloc > 0 ? 'PARTIAL' : 'OPEN');
+    }
+  }
+
+  bills.sort((a, b) => (b.billingDate || '').localeCompare(a.billingDate || '') || String(b.voucherNumber || '').localeCompare(String(a.voucherNumber || ''), undefined, { numeric: true }));
+
+  const activeBills = bills.filter(b => b.status !== 'CANCELLED');
+  const openBills = activeBills.filter(b => b.unpaidAmount > 0.5);
+  const oldestOpen = openBills.reduce((min, b) => (!min || b.billingDate < min.billingDate ? b : min), null);
+
+  const openingBalance = Math.round(Math.abs(openingSigned) * 100) / 100;
+  const openingBalanceType = openingSigned > 0.005 ? 'Dr' : (openingSigned < -0.005 ? 'Cr' : 'Nil');
+  const closingBalance = Math.round(Math.abs(runningSigned) * 100) / 100;
+  const balanceType = runningSigned > 0.005 ? 'Dr' : (runningSigned < -0.005 ? 'Cr' : 'Nil');
+
+  return {
+    partyName: baseParty.partyName,
+    group: baseParty.group || '',
+    category: baseParty.category || 'other',
+    city: baseParty.city || '',
+    state: baseParty.state || '',
+    address: baseParty.address || '',
+    gstin: baseParty.gstin || '',
+    mobile: baseParty.mobile || '',
+    fromDate: effFrom || null,
+    asOfDate: effAsOf,
+    formattedFromDate: effFrom ? fmtDmyDash(effFrom) : 'Start (01-04-2026)',
+    formattedAsOfDate: fmtDmyDash(effAsOf),
+    openingSigned,
+    openingBalance,
+    openingBalanceType,
+    totalDebits,
+    totalCredits,
+    closingSigned: runningSigned,
+    closingBalance,
+    balanceType,
+    totalBillsActive: activeBills.length,
+    totalCartons: activeBills.reduce((s, b) => s + (b.cartons || 0), 0),
+    totalBilled: Math.round(activeBills.reduce((s, b) => s + (b.grossAmount || 0), 0) * 100) / 100,
+    totalCdGiven: Math.round(activeBills.filter(b => b.cdStatus === 'GIVEN').reduce((s, b) => s + (b.cdAmount || 0), 0) * 100) / 100,
+    totalCdPendingEstimate: Math.round(activeBills.filter(b => b.cdStatus === 'PENDING').reduce((s, b) => s + (b.cdAmount || 0), 0) * 100) / 100,
+    oldestOpenBillingDate: oldestOpen ? oldestOpen.billingDate : null,
+    oldestOpenAgingDays: oldestOpen ? oldestOpen.agingDaysFromBilling : 0,
+    bills,
+    settlements: rawSettlements,
+    transactions
+  };
+}
 
 async function loadLedgerBookDropdown() {
   const select = document.getElementById('ledgerBookSelect');
@@ -2255,52 +2542,60 @@ async function loadLedgerBookDropdown() {
   const searchInput = document.getElementById('ledgerSearchInput');
   const itemsList = document.getElementById('ledgerItemsList');
   const triggerText = document.getElementById('ledgerTriggerText');
+  const fromInput = document.getElementById('ledgerFromDate');
+  const asOfInput = document.getElementById('ledgerAsOfDate');
 
-  let available = [];
-  if (!window._serverOffline) {
-    try {
-      const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 1000);
-      const resp = await fetch(getApiUrl('/api/ledger/statement'), { signal: controller.signal });
-      clearTimeout(tid);
-      if (resp.ok) {
-        const data = await resp.json();
-        available = data.availableLedgers || [];
-      }
-    } catch (err) {
-      window._serverOffline = true;
-    }
+  await ensureLedgerDataLoaded();
+
+  const defaultAsOf = state.ledgerData?.asOfDate || getLocalIsoDate();
+  if (asOfInput && !asOfInput.value) {
+    asOfInput.value = defaultAsOf;
   }
 
-  // Offline fallback: extract unique ledgers from cached local data
-  if (!available || available.length === 0) {
-    const set = new Set();
-    if (state.ledgers && state.ledgers.length > 0) {
-      state.ledgers.forEach(l => {
-        if (l.name) set.add(l.name.trim());
-      });
-    }
-    if (state.rawVouchers && state.rawVouchers.length > 0) {
-      state.rawVouchers.forEach(v => {
-        if (v.partyName) set.add(v.partyName.trim());
-        (v.ledgerEntries || []).forEach(le => {
-          if (le.ledgerName) set.add(le.ledgerName.trim());
-        });
-      });
-    }
-    if (state.aging?.debtors?.parties) {
-      state.aging.debtors.parties.forEach(p => set.add(p.partyName.trim()));
-    }
-    set.add('Union Bank Current A/c');
-    available = Array.from(set).filter(Boolean).sort();
+  if (fromInput && !fromInput.dataset.bound) {
+    fromInput.dataset.bound = '1';
+    fromInput.addEventListener('change', () => {
+      if (state.selectedLedger) loadLedgerStatement(state.selectedLedger);
+    });
+  }
+  if (asOfInput && !asOfInput.dataset.bound) {
+    asOfInput.dataset.bound = '1';
+    asOfInput.addEventListener('change', () => {
+      if (state.selectedLedger) loadLedgerStatement(state.selectedLedger);
+    });
   }
 
-  // Also populate native select as fallback
+  // Build ordered list from ledgerData (47 ledgers) or fallback
+  let ledgerItems = [];
+  if (state.ledgerData?.parties && state.ledgerData.parties.length > 0) {
+    ledgerItems = state.ledgerData.parties.map(p => ({
+      name: p.partyName,
+      group: p.group || p.category,
+      category: p.category,
+      balanceLabel: p.closingBalance > 0 ? `${formatINR(p.closingBalance)} ${p.balanceType}` : 'Nil'
+    }));
+  } else {
+    const set = new Set(['Union Bank Current A/c']);
+    (state.ledgers || []).forEach(l => l.name && set.add(l.name.trim()));
+    (state.rawVouchers || []).forEach(v => {
+      if (v.partyName) set.add(v.partyName.trim());
+      (v.ledgerEntries || []).forEach(le => le.ledgerName && set.add(le.ledgerName.trim()));
+    });
+    if (state.aging?.debtors?.parties) state.aging.debtors.parties.forEach(p => set.add(p.partyName.trim()));
+    ledgerItems = Array.from(set).filter(Boolean).sort().map(name => ({
+      name, group: '', category: 'other', balanceLabel: ''
+    }));
+  }
+
   if (select) {
-    select.innerHTML = `<option value="">Select Ledger...</option>` + 
-      available.map(l => `<option value="${l}">${l}</option>`).join('');
+    select.innerHTML = `<option value="">Select Ledger...</option>` +
+      ledgerItems.map(l => `<option value="${l.name}">${l.name}</option>`).join('');
     select.onchange = () => {
-      if (select.value) loadLedgerStatement(select.value);
+      if (select.value) {
+        state.selectedLedger = select.value;
+        if (triggerText) triggerText.innerText = select.value;
+        loadLedgerStatement(select.value);
+      }
     };
   }
 
@@ -2308,7 +2603,9 @@ async function loadLedgerBookDropdown() {
 
   function renderDropdownItems(filter = '') {
     const q = filter.toLowerCase().trim();
-    const filtered = available.filter(l => l.toLowerCase().includes(q));
+    const filtered = ledgerItems.filter(l =>
+      l.name.toLowerCase().includes(q) || (l.group || '').toLowerCase().includes(q)
+    );
 
     if (filtered.length === 0) {
       itemsList.innerHTML = `<div style="padding: 12px; font-size: 12px; color: #94A3B8; text-align: center;">No matching ledgers found</div>`;
@@ -2316,18 +2613,20 @@ async function loadLedgerBookDropdown() {
     }
 
     itemsList.innerHTML = filtered.map(l => {
-      const isSelected = l === state.selectedLedger;
+      const isSelected = l.name === state.selectedLedger;
       return `
-        <div class="dropdown-item ${isSelected ? 'selected' : ''}" data-ledger="${l}">
-          <span>${l}</span>
-          ${isSelected ? '<i data-lucide="check" style="width: 14px; height: 14px; color: #0284C7;"></i>' : ''}
+        <div class="dropdown-item ${isSelected ? 'selected' : ''}" data-ledger="${l.name}">
+          <div style="min-width: 0;">
+            <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${l.name}</div>
+            ${l.group ? `<div style="font-size: 10px; color: #64748B; font-weight: 600;">${l.group}${l.balanceLabel ? ' • ' + l.balanceLabel : ''}</div>` : ''}
+          </div>
+          ${isSelected ? '<i data-lucide="check" style="width: 14px; height: 14px; color: #0284C7; flex-shrink: 0;"></i>' : ''}
         </div>
       `;
     }).join('');
 
     if (window.lucide) lucide.createIcons();
 
-    // Click handler
     itemsList.querySelectorAll('.dropdown-item').forEach(item => {
       item.addEventListener('click', () => {
         const ledger = item.getAttribute('data-ledger');
@@ -2343,7 +2642,6 @@ async function loadLedgerBookDropdown() {
 
   renderDropdownItems('');
 
-  // Toggle menu
   if (triggerBtn && menu) {
     triggerBtn.onclick = (e) => {
       e.stopPropagation();
@@ -2357,127 +2655,400 @@ async function loadLedgerBookDropdown() {
     };
   }
 
-  // Filter typing
   if (searchInput) {
-    searchInput.oninput = (e) => {
-      renderDropdownItems(e.target.value);
-    };
+    searchInput.oninput = (e) => renderDropdownItems(e.target.value);
     searchInput.onclick = (e) => e.stopPropagation();
   }
 
-  // Close on outside click
-  document.addEventListener('click', (e) => {
-    if (customWrap && !customWrap.contains(e.target) && menu) {
-      menu.classList.remove('dropdown-open');
-    }
-  });
+  if (!window._ledgerDropdownDocBound) {
+    window._ledgerDropdownDocBound = true;
+    document.addEventListener('click', (e) => {
+      const cw = document.getElementById('ledgerCustomDropdown');
+      const m = document.getElementById('ledgerDropdownMenu');
+      if (cw && !cw.contains(e.target) && m) m.classList.remove('dropdown-open');
+    });
+  }
 
-  // Auto-select Union Bank Current A/c by default
-  if (!state.selectedLedger && available.includes('Union Bank Current A/c')) {
-    state.selectedLedger = 'Union Bank Current A/c';
-    if (triggerText) triggerText.innerText = 'Union Bank Current A/c';
-    if (select) select.value = 'Union Bank Current A/c';
-    loadLedgerStatement('Union Bank Current A/c');
+  const namesList = ledgerItems.map(x => x.name);
+  if (!state.selectedLedger) {
+    state.selectedLedger = namesList.includes('Union Bank Current A/c') ? 'Union Bank Current A/c' : (namesList[0] || '');
+  }
+  if (state.selectedLedger) {
+    if (triggerText) triggerText.innerText = state.selectedLedger;
+    if (select) select.value = state.selectedLedger;
+    loadLedgerStatement(state.selectedLedger);
   }
 }
 
+window.setLedgerDatePreset = function(preset) {
+  const fromInput = document.getElementById('ledgerFromDate');
+  const asOfInput = document.getElementById('ledgerAsOfDate');
+  if (!asOfInput) return;
+  if (fromInput) fromInput.value = '';
+  const latest = state.ledgerData?.asOfDate || getLocalIsoDate();
+  if (preset === 'today') asOfInput.value = latest;
+  else if (preset === 'oct31') asOfInput.value = '2026-10-31';
+  else if (preset === 'sep30') asOfInput.value = '2026-09-30';
+  else if (preset === 'aug31') asOfInput.value = '2026-08-31';
+  if (state.selectedLedger) loadLedgerStatement(state.selectedLedger);
+};
+
+window.openPartyLedgerInBook = function(partyName) {
+  state.selectedLedger = partyName;
+  window.navigateToTab('ledger-book');
+  setTimeout(() => {
+    const triggerText = document.getElementById('ledgerTriggerText');
+    const select = document.getElementById('ledgerBookSelect');
+    if (triggerText) triggerText.innerText = partyName;
+    if (select) select.value = partyName;
+    loadLedgerStatement(partyName);
+  }, 80);
+};
+
 async function loadLedgerStatement(ledgerName) {
-  let data = null;
-  if (!window._serverOffline) {
-    try {
-      const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 1000);
-      const resp = await fetch(getApiUrl(`/api/ledger/statement?ledger=${encodeURIComponent(ledgerName)}`), { signal: controller.signal });
-      clearTimeout(tid);
-      if (resp.ok) {
-        data = await resp.json();
+  if (!ledgerName) return;
+  await ensureLedgerDataLoaded();
+
+  const fromIso = document.getElementById('ledgerFromDate')?.value || '';
+  const asOfIso = document.getElementById('ledgerAsOfDate')?.value || state.ledgerData?.asOfDate || getLocalIsoDate();
+  const report = computePointInTimeLedger(ledgerName, asOfIso, fromIso);
+  state.currentLedgerReport = report;
+
+  const openStr = report.openingBalance > 0 ? `${formatINR(report.openingBalance)} ${report.openingBalanceType}` : '₹0';
+  const closeStr = report.closingBalance > 0 ? `${formatINR(report.closingBalance)} ${report.balanceType}` : '₹0 (Settled)';
+
+  const elOpen = document.getElementById('ledgerOpeningBalance');
+  const elDeb = document.getElementById('ledgerTotalDebits');
+  const elCre = document.getElementById('ledgerTotalCredits');
+  const elClose = document.getElementById('ledgerClosingBalance');
+  const elCnt = document.getElementById('ledgerVoucherCount');
+  const elAge = document.getElementById('ledgerOldestAging');
+
+  if (elOpen) elOpen.innerText = openStr;
+  if (elDeb) elDeb.innerText = formatINR(report.totalDebits);
+  if (elCre) elCre.innerText = formatINR(report.totalCredits);
+  if (elClose) elClose.innerText = closeStr;
+  if (elCnt) elCnt.innerText = report.bills.length > 0
+    ? `${report.transactions.length} Vch / ${report.totalBillsActive} Bills`
+    : `${report.transactions.length}`;
+  if (elAge) elAge.innerText = report.oldestOpenAgingDays > 0 ? `${report.oldestOpenAgingDays} Days` : '—';
+
+  const metaStrip = document.getElementById('ledgerPartyMetaStrip');
+  if (metaStrip) {
+    metaStrip.style.display = 'flex';
+    const parts = [
+      `<strong>Group:</strong> ${report.group || 'Ledger'}`,
+      report.gstin ? `<strong>GSTIN:</strong> ${report.gstin}` : '',
+      report.city || report.state ? `<strong>Location:</strong> ${[report.city, report.state].filter(Boolean).join(', ')}` : '',
+      report.totalCartons > 0 ? `<strong>Total Cartons:</strong> ${report.totalCartons} CTN` : '',
+      `<strong>Window:</strong> ${report.formattedFromDate} to ${report.formattedAsOfDate}`
+    ].filter(Boolean);
+    metaStrip.innerHTML = `<span>${parts.join(' &nbsp;&bull;&nbsp; ')}</span>`;
+  }
+
+  // Render Nested Bill-by-Bill Schedule
+  const billsSec = document.getElementById('ledgerBillsSection');
+  const billsTbody = document.getElementById('ledgerBillsTbody');
+  const billsSub = document.getElementById('ledgerBillsSubtitle');
+  const cdBadge = document.getElementById('ledgerCdSummaryBadge');
+  if (billsSec && billsTbody) {
+    if (report.bills.length > 0) {
+      billsSec.style.display = 'block';
+      if (billsSub) billsSub.innerText = `All ${report.bills.length} bills up to ${report.formattedAsOfDate} — Aging Days calculated from Supplier Billing Date`;
+      if (cdBadge) {
+        cdBadge.innerText = report.category === 'debtor'
+          ? `5% CD Given: ${formatINR(report.totalCdGiven)} | Est. Pending CD: ${formatINR(report.totalCdPendingEstimate)}`
+          : `Total Purchase Billed: ${formatINR(report.totalBilled)}`;
       }
-    } catch (err) {
-      window._serverOffline = true;
+      billsTbody.innerHTML = report.bills.map(b => {
+        const statusCls = b.status === 'PAID' ? 'badge-success'
+          : (b.status === 'CANCELLED' ? 'badge-neutral'
+            : (b.status === 'PARTIAL' ? 'badge-warning' : 'badge-danger'));
+        const ageCls = b.status === 'PAID' || b.status === 'CANCELLED' ? '#64748B'
+          : (b.agingDaysFromBilling > 45 ? '#DC2626' : (b.agingDaysFromBilling > 30 ? '#D97706' : '#0F172A'));
+        const cdCell = b.cdStatus === 'GIVEN'
+          ? `<span style="color:#15803D;font-weight:700;">${formatINR(b.cdAmount)}</span> <span style="font-size:10px;color:#64748B;">(${b.cdCreditNoteNo || 'CN'})</span>`
+          : (b.cdStatus === 'PENDING' ? `<span style="color:#64748B;">Pending (${formatINR(b.cdAmount)})</span>` : '—');
+        return `
+          <tr>
+            <td>${b.formattedBillingDate || fmtDmyDash(b.billingDate)}</td>
+            <td class="td-bold">${b.voucherNumber}</td>
+            <td class="td-muted">${b.reference || '—'}</td>
+            <td style="text-align: right;">${b.cartons || '—'}</td>
+            <td style="text-align: right; font-weight: 700;">${formatINR(b.grossAmount)}</td>
+            <td style="text-align: right; font-size: 11.5px;">${cdCell}</td>
+            <td style="text-align: right; color: #15803D;">${b.settledAmount > 0 ? formatINR(b.settledAmount) : '—'}</td>
+            <td style="text-align: right; font-weight: 800; color: ${b.unpaidAmount > 0 ? '#B91C1C' : '#16A34A'};">${formatINR(b.unpaidAmount)}</td>
+            <td style="text-align: center; font-weight: 800; color: ${ageCls};">${b.status === 'CANCELLED' ? '—' : b.agingDaysFromBilling + 'd'}</td>
+            <td style="text-align: center;"><span class="badge-pill ${statusCls}" style="font-size: 10px;">${b.status}</span></td>
+          </tr>
+        `;
+      }).join('');
+    } else {
+      billsSec.style.display = 'none';
+      billsTbody.innerHTML = '';
     }
   }
 
-  // Offline fallback: compute accurate statement directly from state.rawVouchers + ledgerEntries
-  if (!data || !data.transactions) {
-    const targetLower = ledgerName.trim().toLowerCase();
-    const vchs = (state.rawVouchers || []).filter(v => {
-      if (v.partyName && v.partyName.trim().toLowerCase() === targetLower) return true;
-      if ((v.ledgerEntries || []).some(le => le.ledgerName && le.ledgerName.trim().toLowerCase() === targetLower)) return true;
-      return false;
-    }).sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
-
-    let totalDebits = 0;
-    let totalCredits = 0;
-    let runningBalance = 0;
-
-    const txs = vchs.map(v => {
-      const entries = (v.ledgerEntries || []).filter(le => le.ledgerName && le.ledgerName.trim().toLowerCase() === targetLower);
-      let debit = 0;
-      let credit = 0;
-      if (entries.length > 0) {
-        entries.forEach(le => {
-          const val = le.rawAmount !== undefined ? Number(le.rawAmount) : (le.isDeemedPositive ? -Math.abs(Number(le.amount) || 0) : Math.abs(Number(le.amount) || 0));
-          if (val < 0) debit += Math.abs(val);
-          else if (val > 0) credit += val;
-        });
-      } else {
-        const amt = Number(v.amount || 0);
-        if (v.voucherType === 'Sales' || v.voucherType === 'Payment' || v.voucherType === 'Debit Note') debit = amt;
-        else credit = amt;
-      }
-
-      totalDebits += debit;
-      totalCredits += credit;
-      runningBalance += (debit - credit);
-
-      return {
-        date: v.date,
-        formattedDate: formatDateStr(v.date),
-        voucherType: v.voucherType,
-        voucherNumber: v.voucherNumber,
-        reference: v.reference,
-        narration: v.narration,
-        debit,
-        credit,
-        runningBalance
-      };
-    });
-
-    data = {
-      ledgerName,
-      totalDebits,
-      totalCredits,
-      closingBalance: runningBalance,
-      transactions: txs
-    };
-  }
-
-  document.getElementById('ledgerTotalDebits').innerText = formatINR(data.totalDebits);
-  document.getElementById('ledgerTotalCredits').innerText = formatINR(data.totalCredits);
-  document.getElementById('ledgerClosingBalance').innerText = formatINR(data.closingBalance);
-  document.getElementById('ledgerVoucherCount').innerText = data.transactions?.length || 0;
-
+  // Render Chronological Statement
   const tbody = document.getElementById('ledgerStatementTbody');
   if (!tbody) return;
 
-  if (!data.transactions || data.transactions.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #94A3B8; padding: 30px;">No transactions recorded for ${ledgerName}.</td></tr>`;
+  const openRowHtml = report.openingBalance > 0 || report.fromDate ? `
+    <tr style="background: #F8FAFC; font-weight: 700;">
+      <td>${report.fromDate ? fmtDmyDash(report.fromDate) : '01-04-2026'}</td>
+      <td><span class="stint-tag-pill">Opening</span></td>
+      <td class="td-bold">—</td>
+      <td class="td-muted">—</td>
+      <td style="font-size: 12px; color: #475569;">Opening Balance brought forward</td>
+      <td>${report.openingSigned > 0 ? formatINR(report.openingBalance) : '—'}</td>
+      <td>${report.openingSigned < 0 ? formatINR(report.openingBalance) : '—'}</td>
+      <td class="td-bold">${openStr}</td>
+    </tr>
+  ` : '';
+
+  if (report.transactions.length === 0 && !openRowHtml) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: #94A3B8; padding: 30px;">No transactions recorded for ${ledgerName} up to ${report.formattedAsOfDate}.</td></tr>`;
     return;
   }
 
-  tbody.innerHTML = data.transactions.map(t => `
+  const txRowsHtml = report.transactions.map(t => `
     <tr>
-      <td>${t.formattedDate || t.date}</td>
+      <td>${t.formattedDate || fmtDmyDash(t.date)}</td>
       <td><span class="stint-tag-pill">${t.voucherType}</span></td>
       <td class="td-bold">${t.voucherNumber || '—'}</td>
       <td class="td-muted">${t.reference || '—'}</td>
-      <td style="max-width: 250px; font-size: 12px; color: #64748B;">${t.narration || '—'}</td>
+      <td style="max-width: 260px; font-size: 12px; color: #64748B;">${t.narration || (t.counterLedgers?.length ? t.counterLedgers.join(', ') : '—')}</td>
       <td style="color: #15803D; font-weight: 700;">${t.debit > 0 ? formatINR(t.debit) : '—'}</td>
       <td style="color: #B91C1C; font-weight: 700;">${t.credit > 0 ? formatINR(t.credit) : '—'}</td>
-      <td class="td-bold">${formatINR(t.runningBalance)}</td>
+      <td class="td-bold">${t.runningBalance > 0 ? `${formatINR(t.runningBalance)} ${t.runningBalanceType}` : '₹0'}</td>
     </tr>
   `).join('');
+
+  tbody.innerHTML = openRowHtml + (txRowsHtml || `<tr><td colspan="8" style="text-align: center; color: #94A3B8; padding: 20px;">No transactions in selected date window (${report.formattedFromDate} to ${report.formattedAsOfDate}).</td></tr>`);
 }
+
+function buildPartyLedgerPrintHtml(report, includeToolbar = false) {
+  const openStr = report.openingBalance > 0 ? `${formatINR(report.openingBalance)} ${report.openingBalanceType}` : '₹0';
+  const closeStr = report.closingBalance > 0 ? `${formatINR(report.closingBalance)} ${report.balanceType}` : '₹0 (Nil)';
+  const genTime = new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
+
+  const billsBlock = report.bills.length > 0 ? `
+    <div style="margin-top: 14px;">
+      <div style="font-size: 10pt; font-weight: 800; color: #0F172A; margin-bottom: 5px; border-bottom: 1.5px solid #1E293B; padding-bottom: 3px;">
+        Bill-by-Bill Schedule &amp; Aging from Billing Date (As of ${report.formattedAsOfDate})
+      </div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 8pt; margin-bottom: 12px;">
+        <thead>
+          <tr style="background: #1E293B; color: #FFFFFF; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Billing Dt</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Bill #</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Supplier Ref</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">CTN</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">Gross (₹)</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">5% CD</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">Settled (₹)</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">Unpaid (₹)</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: center;">Aging</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: center;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${report.bills.map((b, i) => `
+            <tr style="background: ${i % 2 === 1 ? '#F8FAFC' : '#FFFFFF'};">
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">${b.formattedBillingDate || fmtDmyDash(b.billingDate)}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; font-weight: 700;">${b.voucherNumber}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">${b.reference || '—'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${b.cartons || '—'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${formatINR(b.grossAmount)}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${b.cdStatus === 'GIVEN' ? formatINR(b.cdAmount) + ' (' + (b.cdCreditNoteNo || 'CN') + ')' : (b.cdStatus === 'PENDING' ? 'Pending' : '—')}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${b.settledAmount > 0 ? formatINR(b.settledAmount) : '—'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right; font-weight: 700;">${formatINR(b.unpaidAmount)}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: center; font-weight: 700;">${b.status === 'CANCELLED' ? '—' : b.agingDaysFromBilling + 'd'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: center;">${b.status}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  ` : '';
+
+  return `
+    <div id="pdfPartyLedgerRenderArea" style="font-family: 'Segoe UI', Arial, sans-serif; color: #0F172A; background: #FFFFFF; padding: 14px; max-width: 820px; margin: 0 auto;">
+      ${includeToolbar ? `<div class="toolbar" style="margin-bottom:12px;display:flex;justify-content:flex-end;"><button class="btn" onclick="window.print()" style="background:#0F172A;color:#FFF;border:none;padding:8px 14px;border-radius:6px;font-weight:700;cursor:pointer;">Print / Save as PDF</button></div>` : ''}
+      <div style="text-align: center; border-bottom: 2px solid #0F172A; padding-bottom: 8px; margin-bottom: 10px;">
+        <div style="font-size: 14pt; font-weight: 800; letter-spacing: 0.02em;">SKIL LIFESTYLE LLP</div>
+        <div style="font-size: 8pt; color: #475569;">Shop No-7A, Vasavi Plaza, Jagadamba Jn, Visakhapatnam - 530020 &bull; GSTIN: 37AFZFS2777J1ZV &bull; Mob: 9348343310</div>
+        <div style="font-size: 11pt; font-weight: 800; margin-top: 6px; color: #0F172A;">LEDGER ACCOUNT STATEMENT — ${report.partyName}</div>
+        <div style="font-size: 8.5pt; color: #334155;">
+          ${[report.group, report.gstin ? 'GSTIN: ' + report.gstin : '', [report.city, report.state].filter(Boolean).join(', ')].filter(Boolean).join(' &bull; ')}
+        </div>
+        <div style="font-size: 8.5pt; font-weight: 700; color: #0F172A; margin-top: 3px;">
+          Statement Period: ${report.formattedFromDate} to ${report.formattedAsOfDate}
+        </div>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; font-size: 8.5pt; margin-bottom: 12px;">
+        <tr>
+          <td style="border: 1px solid #CBD5E1; padding: 6px 8px; background: #F8FAFC;"><span style="color:#64748B;">Opening:</span> <strong>${openStr}</strong></td>
+          <td style="border: 1px solid #CBD5E1; padding: 6px 8px; background: #F8FAFC;"><span style="color:#64748B;">Total Dr:</span> <strong>${formatINR(report.totalDebits)}</strong></td>
+          <td style="border: 1px solid #CBD5E1; padding: 6px 8px; background: #F8FAFC;"><span style="color:#64748B;">Total Cr:</span> <strong>${formatINR(report.totalCredits)}</strong></td>
+          <td style="border: 1px solid #1E293B; padding: 6px 8px; background: #1E293B; color: #FFFFFF; -webkit-print-color-adjust: exact; print-color-adjust: exact;"><span style="color:#CBD5E1;">Closing Bal:</span> <strong>${closeStr}</strong></td>
+        </tr>
+      </table>
+
+      ${billsBlock}
+
+      <div style="font-size: 10pt; font-weight: 800; color: #0F172A; margin: 10px 0 5px 0; border-bottom: 1.5px solid #1E293B; padding-bottom: 3px;">
+        Chronological Ledger Entries (${report.formattedFromDate} to ${report.formattedAsOfDate})
+      </div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 8pt;">
+        <thead>
+          <tr style="background: #1E293B; color: #FFFFFF; -webkit-print-color-adjust: exact; print-color-adjust: exact;">
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Date</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Type</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Vch No</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Ref</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: left;">Particulars / Narration</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">Debit (₹)</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">Credit (₹)</th>
+            <th style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background: #F8FAFC; font-weight: 700;">
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">${report.fromDate ? fmtDmyDash(report.fromDate) : '01-04-2026'}</td>
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">Opening</td>
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">—</td>
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">—</td>
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">Opening Balance b/f</td>
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${report.openingSigned > 0 ? formatINR(report.openingBalance) : '—'}</td>
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${report.openingSigned < 0 ? formatINR(report.openingBalance) : '—'}</td>
+            <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${openStr}</td>
+          </tr>
+          ${report.transactions.map((t, i) => `
+            <tr style="background: ${i % 2 === 1 ? '#F8FAFC' : '#FFFFFF'};">
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; white-space: nowrap;">${t.formattedDate || fmtDmyDash(t.date)}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">${t.voucherType}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; font-weight: 700;">${t.voucherNumber || '—'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">${t.reference || '—'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1;">${t.narration || (t.counterLedgers?.length ? t.counterLedgers.join(', ') : '—')}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${t.debit > 0 ? formatINR(t.debit) : '—'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right;">${t.credit > 0 ? formatINR(t.credit) : '—'}</td>
+              <td style="padding: 4px 6px; border: 1px solid #CBD5E1; text-align: right; font-weight: 700; white-space: nowrap;">${t.runningBalance > 0 ? `${formatINR(t.runningBalance)} ${t.runningBalanceType}` : '₹0'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+        <tfoot>
+          <tr style="background: #E2E8F0; font-weight: 800;">
+            <td colspan="5" style="padding: 5px 6px; border: 1px solid #334155;">CLOSING BALANCE AS OF ${report.formattedAsOfDate}</td>
+            <td style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">${formatINR(report.totalDebits)}</td>
+            <td style="padding: 5px 6px; border: 1px solid #334155; text-align: right;">${formatINR(report.totalCredits)}</td>
+            <td style="padding: 5px 6px; border: 1px solid #334155; text-align: right; white-space: nowrap;">${closeStr}</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div style="margin-top: 12px; font-size: 7.5pt; color: #475569; border-top: 1px solid #CBD5E1; padding-top: 6px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+        <span>Bank: Union Bank of India | Rayagada | A/c: 348621010000129 | IFSC: UBIN0934861</span>
+        <span>Generated: ${genTime} &bull; SKIL Master</span>
+      </div>
+    </div>
+  `;
+}
+
+function getActiveLedgerReport() {
+  const name = state.selectedLedger || document.getElementById('ledgerBookSelect')?.value;
+  if (!name) return null;
+  const fromIso = document.getElementById('ledgerFromDate')?.value || '';
+  const asOfIso = document.getElementById('ledgerAsOfDate')?.value || state.ledgerData?.asOfDate || getLocalIsoDate();
+  return computePointInTimeLedger(name, asOfIso, fromIso);
+}
+
+window.downloadPartyLedgerPdf = async function() {
+  const report = getActiveLedgerReport();
+  if (!report) return;
+  const container = document.getElementById('printStatementContainer');
+  if (!container) return;
+  container.innerHTML = buildPartyLedgerPrintHtml(report, false);
+  const fileBase = `SKIL_Ledger_${safeFilePart(report.partyName)}_as_of_${report.asOfDate}`;
+  const renderElem = document.getElementById('pdfPartyLedgerRenderArea');
+  if (window.html2pdf && renderElem) {
+    try {
+      await window.html2pdf().set({
+        margin: [8, 8, 8, 8],
+        filename: `${fileBase}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(renderElem).save();
+      return;
+    } catch (e) {
+      console.warn('html2pdf fallback to print:', e);
+    }
+  }
+  window.skilTriggerPrint(fileBase);
+};
+
+window.downloadPartyLedgerHtml = function() {
+  const report = getActiveLedgerReport();
+  if (!report) return;
+  const body = buildPartyLedgerPrintHtml(report, true);
+  const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SKIL Ledger - ${report.partyName} (${report.asOfDate})</title><style>@page{size:A4 portrait;margin:9mm}@media print{.toolbar{display:none!important}body{margin:0}}</style></head><body>${body}</body></html>`;
+  triggerBlobDownload(html, 'text/html;charset=utf-8', `SKIL_Ledger_${safeFilePart(report.partyName)}_as_of_${report.asOfDate}.html`);
+};
+
+window.downloadPartyLedgerCsv = function() {
+  const report = getActiveLedgerReport();
+  if (!report) return;
+  const lines = [
+    ['SKIL LIFESTYLE LLP — POINT-IN-TIME LEDGER STATEMENT'],
+    ['Party / Ledger', report.partyName, 'Group', report.group, 'GSTIN', report.gstin || ''],
+    ['From Date', report.formattedFromDate, 'As of Date', report.formattedAsOfDate, 'Closing Balance', `${report.closingBalance} ${report.balanceType}`],
+    []
+  ];
+
+  if (report.bills.length > 0) {
+    lines.push(['BILL-BY-BILL SCHEDULE & AGING FROM BILLING DATE']);
+    lines.push(['Billing Date', 'Tally Date', 'Bill No', 'Supplier Ref', 'Cartons', 'Pairs', 'Taxable (INR)', 'Gross (INR)', 'CD Status', '5% CD (INR)', 'Settled (INR)', 'Unpaid (INR)', 'Aging Days from Billing', 'Status']);
+    for (const b of report.bills) {
+      lines.push([
+        b.formattedBillingDate || fmtDmyDash(b.billingDate),
+        b.formattedTallyDate || fmtDmyDash(b.tallyDate),
+        b.voucherNumber, b.reference || '', b.cartons || 0, b.pairs || 0,
+        b.taxableAmount || 0, b.grossAmount || 0, b.cdStatus, b.cdAmount || 0,
+        b.settledAmount || 0, b.unpaidAmount || 0, b.agingDaysFromBilling || 0, b.status
+      ]);
+    }
+    lines.push([]);
+  }
+
+  lines.push(['CHRONOLOGICAL LEDGER TRANSACTIONS']);
+  lines.push(['Date', 'Voucher Type', 'Voucher No', 'Reference', 'Narration', 'Debit (INR)', 'Credit (INR)', 'Running Balance', 'Dr/Cr']);
+  lines.push([report.fromDate ? fmtDmyDash(report.fromDate) : '01-04-2026', 'Opening', '', '', 'Opening Balance b/f', report.openingSigned > 0 ? report.openingBalance : 0, report.openingSigned < 0 ? report.openingBalance : 0, report.openingBalance, report.openingBalanceType]);
+  for (const t of report.transactions) {
+    lines.push([t.formattedDate || fmtDmyDash(t.date), t.voucherType, t.voucherNumber || '', t.reference || '', t.narration || '', t.debit || 0, t.credit || 0, t.runningBalance || 0, t.runningBalanceType || '']);
+  }
+
+  const csvContent = '\uFEFF' + lines.map(row => row.map(csvEscapeCell).join(',')).join('\r\n');
+  triggerBlobDownload(csvContent, 'text/csv;charset=utf-8', `SKIL_Ledger_${safeFilePart(report.partyName)}_as_of_${report.asOfDate}.csv`);
+};
+
+window.downloadPartyLedgerJson = function() {
+  const report = getActiveLedgerReport();
+  if (!report) return;
+  triggerBlobDownload(JSON.stringify(report, null, 2), 'application/json;charset=utf-8', `SKIL_Ledger_${safeFilePart(report.partyName)}_as_of_${report.asOfDate}.json`);
+};
+
+window.downloadAllLedgerDataJson = async function() {
+  const full = await ensureLedgerDataLoaded();
+  if (!full) {
+    alert('ledger-data.json is not available right now.');
+    return;
+  }
+  const dt = full.asOfDate || getLocalIsoDate();
+  triggerBlobDownload(JSON.stringify(full, null, 2), 'application/json;charset=utf-8', `SKIL_ledger-data_${dt}.json`);
+};
 
 // ==========================================================================
 // 12. FILTER & EVENT LISTENERS

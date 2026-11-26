@@ -4,7 +4,7 @@
     "name": "Ajanta Shoes India Pvt. Ltd.",
     "parent": "Sundry Creditors",
     "openingBalance": 0,
-    "closingBalance": 2069873.77,
+    "closingBalance": 2494715.77,
     "gstin": "19AAECB6793N1ZV",
     "state": "West Bengal",
     "email": "",
@@ -35,7 +35,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "2069873.77",
+        "#text": "2494715.77",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -531,7 +531,7 @@
     "name": "DELIGHT FOOT WEAR",
     "parent": "Sundry Debtors",
     "openingBalance": 0,
-    "closingBalance": -92585,
+    "closingBalance": -152556,
     "gstin": "37AVCPK2090B1ZZ",
     "state": "Andhra Pradesh",
     "email": "",
@@ -562,7 +562,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "-92585.00",
+        "#text": "-152556.00",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -847,7 +847,7 @@
     "name": "GST Purchase",
     "parent": "Purchase Accounts",
     "openingBalance": 0,
-    "closingBalance": -5608308.58,
+    "closingBalance": -6012919.24,
     "gstin": "",
     "state": "",
     "email": "",
@@ -870,7 +870,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "-5608308.58",
+        "#text": "-6012919.24",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -904,7 +904,7 @@
     "name": "GST Sales",
     "parent": "Sales Accounts",
     "openingBalance": 0,
-    "closingBalance": 5661871.51,
+    "closingBalance": 6013451.28,
     "gstin": "",
     "state": "",
     "email": "",
@@ -927,7 +927,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "5661871.51",
+        "#text": "6013451.28",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -1079,7 +1079,7 @@
     "name": "Input IGST",
     "parent": "Current Assets",
     "openingBalance": 0,
-    "closingBalance": -265584.83,
+    "closingBalance": -285815.39,
     "gstin": "",
     "state": "",
     "email": "",
@@ -1102,7 +1102,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "-265584.83",
+        "#text": "-285815.39",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -1196,7 +1196,7 @@
     "name": "JYOTHI FOOT WEAR",
     "parent": "Sundry Debtors",
     "openingBalance": 0,
-    "closingBalance": -215325,
+    "closingBalance": -336191,
     "gstin": "37AUQPP0952Q1ZO",
     "state": "Andhra Pradesh",
     "email": "",
@@ -1231,7 +1231,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "-215325.00",
+        "#text": "-336191.00",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -1663,7 +1663,7 @@
     "name": "M/S.SHREE FOOTWEAR",
     "parent": "Sundry Debtors",
     "openingBalance": 0,
-    "closingBalance": -498556,
+    "closingBalance": -595564,
     "gstin": "37AEBPP0086L1Z9",
     "state": "Andhra Pradesh",
     "email": "",
@@ -1698,7 +1698,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "-498556.00",
+        "#text": "-595564.00",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -2172,7 +2172,7 @@
     "name": "Output CGST",
     "parent": "Duties & Taxes",
     "openingBalance": 0,
-    "closingBalance": 76336.86,
+    "closingBalance": 85126.39,
     "gstin": "",
     "state": "",
     "email": "",
@@ -2195,7 +2195,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "76336.86",
+        "#text": "85126.39",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -2289,7 +2289,7 @@
     "name": "Output SGST",
     "parent": "Duties & Taxes",
     "openingBalance": 0,
-    "closingBalance": 85577.86,
+    "closingBalance": 94367.39,
     "gstin": "",
     "state": "",
     "email": "",
@@ -2312,7 +2312,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "85577.86",
+        "#text": "94367.39",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -2417,7 +2417,7 @@
     "name": "Profit & Loss A/c",
     "parent": "Primary",
     "openingBalance": 0,
-    "closingBalance": 85156.36,
+    "closingBalance": 84150.86,
     "gstin": "",
     "state": "",
     "email": "",
@@ -2440,7 +2440,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "85156.36",
+        "#text": "84150.86",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -2530,7 +2530,7 @@
     "name": "Round Off -(+/-)",
     "parent": "Indirect Expenses",
     "openingBalance": 0,
-    "closingBalance": -5.13,
+    "closingBalance": -5.74,
     "gstin": "",
     "state": "Andhra Pradesh",
     "email": "",
@@ -2557,7 +2557,7 @@
         "@_TYPE": "Number"
       },
       "CLOSINGBALANCE": {
-        "#text": "-5.13",
+        "#text": "-5.74",
         "@_TYPE": "Amount"
       },
       "OPENINGBALANCE": {
@@ -3288,6 +3288,105 @@
         "ISDEFAULTWHATSAPPNUM": "Yes"
       },
       "@_NAME": "SRI SHARVANI TRADERS",
+      "@_RESERVEDNAME": ""
+    }
+  },
+  {
+    "id": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000348",
+    "name": "SRI VENKATESWARA FO0TWEAR AND GENERAL",
+    "parent": "Sundry Debtors",
+    "openingBalance": 0,
+    "closingBalance": -91314,
+    "gstin": "37AKGPT1415N1ZS",
+    "state": "Andhra Pradesh",
+    "email": "",
+    "mobile": "9441053510",
+    "phone": "",
+    "pincode": "532284",
+    "address": "14-112/A and B, NEAR SAIRAM TEMPLE, SAIRAM MANDIR STREET, SOMPETA, Srikakulam, Andhra Pradesh - 532284, Contact: 9441053510, Email: svfgs2018@gmail.com",
+    "alterId": 1036,
+    "raw": {
+      "GUID": {
+        "#text": "582e9795-82b7-4062-9f2f-04b60c3dc54e-00000348",
+        "@_TYPE": "String"
+      },
+      "PRIORSTATENAME": {
+        "#text": "Andhra Pradesh",
+        "@_TYPE": "String"
+      },
+      "PINCODE": {
+        "#text": "532284",
+        "@_TYPE": "String"
+      },
+      "PARENT": {
+        "#text": "Sundry Debtors",
+        "@_TYPE": "String"
+      },
+      "LEDGERMOBILE": {
+        "#text": "9441053510",
+        "@_TYPE": "String"
+      },
+      "ALTERID": {
+        "#text": "1036",
+        "@_TYPE": "Number"
+      },
+      "CLOSINGBALANCE": {
+        "#text": "-91314.00",
+        "@_TYPE": "Amount"
+      },
+      "OPENINGBALANCE": {
+        "#text": "0.00",
+        "@_TYPE": "Amount"
+      },
+      "LANGUAGENAME.LIST": {
+        "NAME.LIST": {
+          "NAME": "SRI VENKATESWARA FO0TWEAR AND GENERAL",
+          "@_TYPE": "String"
+        },
+        "LANGUAGEID": {
+          "#text": "1033",
+          "@_TYPE": "Number"
+        }
+      },
+      "LEDGSTREGDETAILS.LIST": {
+        "APPLICABLEFROM": "20260401",
+        "GSTREGISTRATIONTYPE": "Regular",
+        "TRANSPORTERID": "",
+        "STATE": "",
+        "PLACEOFSUPPLY": "Andhra Pradesh",
+        "GSTIN": "37AKGPT1415N1ZS",
+        "ISOTHTERRITORYASSESSEE": "",
+        "CONSIDERPURCHASEFOREXPORT": "",
+        "ISTRANSPORTER": "",
+        "ISCOMMONPARTY": ""
+      },
+      "LEDMAILINGDETAILS.LIST": {
+        "ADDRESS.LIST": {
+          "ADDRESS": [
+            "14-112/A and B",
+            "NEAR SAIRAM TEMPLE",
+            "SAIRAM MANDIR STREET",
+            "SOMPETA, Srikakulam",
+            "Andhra Pradesh - 532284",
+            "Contact: 9441053510",
+            "Email: svfgs2018@gmail.com"
+          ],
+          "@_TYPE": "String"
+        },
+        "APPLICABLEFROM": "20260401",
+        "PINCODE": "532284",
+        "MAILINGNAME": "SRI VENKATESWARA FO0TWEAR AND GENERAL",
+        "STATE": "Andhra Pradesh",
+        "CITY": "",
+        "COUNTRY": "India"
+      },
+      "CONTACTDETAILS.LIST": {
+        "NAME": "Primary Mobile No.",
+        "PHONENUMBER": "9441053510",
+        "COUNTRYISDCODE": "+91",
+        "ISDEFAULTWHATSAPPNUM": "Yes"
+      },
+      "@_NAME": "SRI VENKATESWARA FO0TWEAR AND GENERAL",
       "@_RESERVEDNAME": ""
     }
   },
